@@ -35,7 +35,7 @@
 .loginTitle {
     margin: 40px;
 }
-form {
+#login-form {
     display: flex;
     flex-direction: column;
     width: 30%;

@@ -22,7 +22,6 @@ const loginClick = function clickOnLogin(event) {
     const form = document.createElement("form");
     form.setAttribute("id","login-form");
     form.setAttribute("method","post");
-    form.setAttribute("onsubmit", "formSubmitListener");
     loginSection.appendChild(form);
         //email
         const mailLabel = document.createElement("label");
@@ -65,35 +64,28 @@ navLogin.addEventListener("click", loginClick);
 // 3- POST THE ID/PSWD, ALERT IF SUCCESS OR NOT
 // submit id + pwd function
 var formSubmitListener = function addFormListener() {
-    const loginForm = document.querySelector("#login-form");
-    loginForm.addEventListener("submit", function submitLogin(event) {
+    const submitForm = document.querySelector("#submit-button");
+    submitForm.addEventListener("click", function submitLogin(event) {
         event.preventDefault();
-        // body object
-        const submittedData = {
-            email: event.target.querySelector("#email").value,
-            password: event.target.querySelector("#password").value
-        }
-        // convert to JSON for body
-        const dataJSON = JSON.stringify(submittedData);
+        // body elemnts
+        const email = document.querySelector("#email").value;
+        const password = document.querySelector("#password").value;
         // define fetch post config object
         const postMethod = {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: dataJSON
+            headers: {  Allow:POST, "Content-Type": "application/json" },
+            body: JSON.stringify({
+                email: email,
+                password: password,
+            })
         }
         // Fetch post
         async function postIdPwd() {
             const postInputs = await fetch("http://localhost:5678/api/users/login", postMethod);
-            const fetchPostData = await postInputs.JSON();
-        }
-        postIdPwd()
-            .then(postInputs => {
-                if (postInputs.ok) {
-                    alert("Bienvenue sur le site");
-                    const refresh = window.location.replace("http://127.0.0.1:5500/FrontEnd//");
-                    setTimeout(refresh, 1000);
-                }  else {
-                    switch(postInputs.statut){
+            const fetchPostData = await postInputs.json();
+            console.log(fetchPostData);
+                if (!fetchPostData.ok) {
+                    switch(fetchPostData.statut){
                         case "404":
                             alert("email invalide");
                         break;
@@ -101,11 +93,16 @@ var formSubmitListener = function addFormListener() {
                             alert("mot de passe invalide");
                         break;
                         default:
-                            alert("mot de passe et/ou email invalide(s)");   
+                            alert("mot de passe et/ou email invalide(s)");
+                    }        
+                    
+                }  else {
+                    alert("bienvenue sur le site");    
                     };
-                };
-            });
-        
+        };
+        postIdPwd().then(fetchPostData => window.localStorage.setItem("token", fetchPostData.body.token))
     });
-};
+};   
+
+
 
