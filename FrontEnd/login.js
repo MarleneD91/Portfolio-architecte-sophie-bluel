@@ -48,6 +48,7 @@ const loginClick = function clickOnLogin(event) {
         submit.setAttribute("type","submit");
         submit.setAttribute("id","submit-button");
         submit.setAttribute("value","Se connecter");
+        submit.addEventListener("click", submitLogin);
         form.appendChild(submit);
         //password forgotten
         const forgotPassword =  document.createElement("a");
@@ -63,9 +64,7 @@ navLogin.addEventListener("click", loginClick);
 
 // 3- POST THE ID/PSWD, ALERT IF SUCCESS OR NOT
 // submit id + pwd function
-var formSubmitListener = function addFormListener() {
-    const submitForm = document.querySelector("#submit-button");
-    submitForm.addEventListener("click", function submitLogin(event) {
+async function submitLogin(event) {
         event.preventDefault();
         // body elemnts
         const email = document.querySelector("#email").value;
@@ -73,36 +72,31 @@ var formSubmitListener = function addFormListener() {
         // define fetch post config object
         const postMethod = {
             method: "POST",
-            headers: {  Allow:POST, "Content-Type": "application/json" },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 email: email,
                 password: password,
             })
         }
         // Fetch post
-        async function postIdPwd() {
-            const postInputs = await fetch("http://localhost:5678/api/users/login", postMethod);
-            const fetchPostData = await postInputs.json();
-            console.log(fetchPostData);
-                if (!fetchPostData.ok) {
-                    switch(fetchPostData.statut){
-                        case "404":
-                            alert("email invalide");
-                        break;
-                        case "401":
-                            alert("mot de passe invalide");
-                        break;
-                        default:
-                            alert("mot de passe et/ou email invalide(s)");
-                    }        
-                    
-                }  else {
-                    alert("bienvenue sur le site");    
-                    };
-        };
-        postIdPwd().then(fetchPostData => window.localStorage.setItem("token", fetchPostData.body.token))
-    });
-};   
+        const postInputs = await fetch("http://localhost:5678/api/users/login", postMethod);
+        const fetchPostData = await postInputs.json();
+        console.log(fetchPostData);
+        console.log(postInputs);
+        if (postInputs.status == 200){
+            alert("Bienvenue sur le site!");
+        } else if (postInputs.status == 401) {
+                alert ("Mot de passe invalide");
+            } else if (postInputs.status == 404) {
+                alert("Mot de passe et/ou identifiant invalide(s)")
+            }
+        window.localStorage.setItem("token", fetchPostData.token);
+
+        
+    };        
+        
+    
+   
 
 
 
