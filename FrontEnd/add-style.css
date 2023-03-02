@@ -1,0 +1,71 @@
+
+/* SHAPPING THE FILTERS */
+.filters {
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    margin:15px;
+}
+.filter {
+    
+    font-family: 'Syne';
+    font-size: 13px;
+    line-height: 19px;
+    text-align: center;
+    color: #1D6154;
+    border: 1px solid #1D6154;
+    border-radius: 60px;
+    background-color: white;
+    padding: 6px 10px;
+    margin: 6px;
+}
+.filter:hover {
+    background-color: #1D6154;
+    color: white;
+}
+
+/* SHAPPING THE LOG IN SECTION */
+.login {
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 250px;
+}
+.loginTitle {
+    margin: 40px;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+}
+#email, #password {
+    border: none;
+    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+    height: 35px;
+    width: 100%;
+    margin: 20px 0px;
+}
+#submit-button {
+    font-family: 'Syne';
+    font-weight: 700;
+    color: white;
+    background-color: #1D6154;
+    width: 45%;
+    height: 30px;
+    text-align: center;
+    border:none;
+    border-radius: 60px ;
+}
+.forgot-password  {
+    font-family: 'Work Sans';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    text-decoration-line: underline;
+    color: #3D3D3D;
+    text-align: center;
+}
+
