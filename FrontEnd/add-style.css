@@ -106,3 +106,38 @@
     text-align: center;
 }
 
+/* "modifier" caption */
+/*Archi Pic change*/
+ .change-architect{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 80%;
+    margin:auto;
+    margin-top: 10px;
+}
+/* My projects change*/
+.my-projects {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+}
+.change-projects {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-left: 15px;
+    margin-bottom: 25px;
+}
+/* Common styles */
+.change-icon {
+    font-size: 16px;
+}
+.change-txt {
+    margin-left: 6px;
+}
+
+
+
