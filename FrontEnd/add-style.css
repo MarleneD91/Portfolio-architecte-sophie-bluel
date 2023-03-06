@@ -69,3 +69,40 @@
     text-align: center;
 }
 
+/* Shappping the admin bar */
+.admin-bar {
+    width: 100%;
+    background-color: #000000;
+    margin:0px;
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 70px;
+}
+.edition {
+    color: #FFFFFF;
+}
+.edition-txt {
+    font-family: 'Work Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    margin: 8px;
+    margin-right: 12px;
+}
+#edition-button {
+    background-color: #FFFFFF;
+    border:1px solid #FFFFFF;
+    border-radius: 60px;
+    padding: 8px 15px;
+    font-family: 'Work Sans';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+}
+
