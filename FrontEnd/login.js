@@ -4,7 +4,7 @@
 const loginClick = function clickOnLogin(event) {
     event.preventDefault();
 // 1 -HTML  (+CSS) STRUCTURE
-    const main = document.querySelector("main");
+    var main = document.querySelector("main");
     main.innerHTML = "";
 
     // login section 
@@ -44,7 +44,7 @@ const loginClick = function clickOnLogin(event) {
         passwordInput.setAttribute("required","");
         form.appendChild(passwordInput);
         //submit
-        const submit = document.createElement("input");
+        var submit = document.createElement("input");
         submit.setAttribute("type","submit");
         submit.setAttribute("id","submit-button");
         submit.setAttribute("value","Se connecter");
@@ -63,6 +63,7 @@ const navLogin = document.querySelector("#login");
 navLogin.addEventListener("click", loginClick);
 
 // 3- POST THE ID/PSWD, ALERT IF SUCCESS OR NOT
+
 // submit id + pwd function
 async function submitLogin(event) {
         event.preventDefault();
@@ -85,16 +86,15 @@ async function submitLogin(event) {
         console.log(postInputs);
         if (postInputs.status == 200){
             alert("Bienvenue sur le site!");
+            window.localStorage.setItem("token", fetchPostData.token);
+            window.location.replace("");
         } else if (postInputs.status == 401) {
                 alert ("Mot de passe invalide");
-            } else if (postInputs.status == 404) {
+        } else if (postInputs.status == 404) {
                 alert("Mot de passe et/ou identifiant invalide(s)")
-            }
-        window.localStorage.setItem("token", fetchPostData.token);
-
-        
+        }   
     };        
-        
+     
     
    
 
