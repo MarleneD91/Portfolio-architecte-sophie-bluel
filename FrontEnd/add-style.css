@@ -25,6 +25,12 @@
 }
 
 /* SHAPPING THE LOG IN SECTION */
+/* login link */
+#login-link {
+    text-decoration: none;
+    color:#000000;
+}
+/* login page */
 .login {
     display:flex;
     flex-direction: column;
@@ -32,7 +38,7 @@
     align-items: center;
     margin-bottom: 250px;
 }
-.loginTitle {
+#loginTitle {
     margin: 40px;
 }
 #login-form {
@@ -57,6 +63,8 @@
     text-align: center;
     border:none;
     border-radius: 60px ;
+    margin: auto;
+    margin-top: 20px;
 }
 .forgot-password  {
     font-family: 'Work Sans';
@@ -67,6 +75,7 @@
     text-decoration-line: underline;
     color: #3D3D3D;
     text-align: center;
+    margin: 15px;
 }
 
 /* Shappping the admin bar */
