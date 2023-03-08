@@ -12,22 +12,54 @@
 	<link rel="stylesheet" href="./assets/style.css">
 	
 </head>
+
 <body>
+<!-- ADMIN BAR , HIDDEN IF NOT CONNECTED -->
+<section id="admin-bar" style="display:none">
+	<i class="fa-regular fa-pen-to-square"></i>
+	<p class="admin-edition edition-txt">Mode édition</p>
+	<button id="admin-edition-button">publier les changements</button>
+</section>	
+<!-- ################################### -->
 <header>
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
 		<ul>
 			<li id="projets">projets</li>
 			<li id="contact">contact</li>
-			<li id="login"><a href="./login.html" id="login-link">login</a></li>
+			<li id="login">login</li>
+			<li id="logout" style="display:none">logout</li> <!-- Logout added -->
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
 </header>
+<!-- ################LOGIN################### -->
+<section id="login-section" style="display:none">
+	<h2 id="loginTitle">Log in</h2>
+	<form id="login-form" method="post">
+		<!-- email input  -->
+		<label for="email">E-mail</label>
+		<input type="email" id="email" required>
+		<!-- password input  -->
+		<label for="password">Mot de passe</label>
+		<input type="password" id="password" required>
+		<!-- submit button  -->
+		<button type="submit" id="submit-button">Se connecter</button>
+		<!-- forgot password ? -->
+		<a href="#forgot-password" class="forgot-password">Mot de passe oublié</a>
+	</form>
+</section>
+<!-- #################LOGIN END################## -->
 <main>
 	<section id="introduction">
 		<figure id="architect-picture">
 			<img src="./assets/images/sophie-bluel.png" alt="">
+			<!-- ################ Edit option ################# -->
+			<div id ="edit-archi-pic" style="display:none">
+				<i class="fa-regular fa-pen-to-square edit-icon"></i>
+				<p class="edit-txt">modifier</p>	
+			</div>
+			<!-- ################ End edit option ################# -->
 		</figure>
 		<article>
 			<h2>Designer d'espace</h2>
@@ -37,7 +69,18 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
+		<!--Div to shape projects header-->
+		<div id="my-projects-headers">
+			<h2>Mes Projets</h2>
+			<!-- ################ Edit option ################# -->
+			<div id="edit-projects" style="display:none">
+				<i class="fa-regular fa-pen-to-square edit-icon"></i>
+				<p class="edit-txt">modifier</p>
+			</div>
+			<!-- ################ End edit option ################# -->
+
+		</div>
+		
 		<div class="gallery">
 			<!-- gallery_and_filters.js -->
 		</div>
@@ -56,6 +99,43 @@
 		</form>
 	</section>
 </main>
+<!-- ###################### MODALS ###################### -->
+	<!-- Modal 1/2 : edit-modal -->
+<aside id="edit-modal" style="display:none">
+	<i class="fa-solid fa-xmark quit-icon"></i>
+	<div id="edit-container">
+		<h3 id="edit-title">Galerie photo</h3>
+		<div id="cards-container">
+			<!-- script modal 1 : projects cards-->
+		</div>
+		<button id="add-modal-link">Ajouter une photo</button>
+		<p id="delete-modal-link">Supprimer la galerie</p>
+	</div>
+</aside>		
+<!-- Modal 2/2 : add-modal -->
+<aside id="add-modal" style="display:none">
+	<i class="fa-solid fa-xmark quit-icon"></i>
+	<div id="add-container">
+		<h3 id="edit-title">Ajout photo</h3>
+		<form id="add-project" method="post">
+			<div id="add-picture">
+				<button id="add-picture-button">+ Ajouter photo</button>
+				<label for="add-picture-button">jpg, png : 4Mo max.</label>
+			</div>
+			<div id="add-picture-info">
+				<label for="add-picture-title">Titre</label>
+				<input id="add-picture-title" type="text" name="title" required>
+				<label for="add-picture-category">Catégorie</label>
+				<select id="add-picture-category" type="select" name="category" required>
+			</div>
+			<button id="add-modal-link">Ajouter une photo</button>
+			<p id="delete-modal-link">Supprimer la galerie</p>
+		</form>
+		<button id="submit-new-project" type="submit" formmethod="post">Valider</button>
+	</div>
+		
+
+</aside>	
 
 <footer>
 	<nav>
@@ -66,7 +146,7 @@
 </footer>
 </body>
 <script src="gallery_and_filters.js" defer></script> <!-- Add the gallery changes w/ JS -->
-<script src="./login.js" defer></script> <!-- Add the login page w/ JS -->
+<script src="./login3.js" defer></script> <!-- Add the login page w/ JS -->
 <script src="https://kit.fontawesome.com/a2f3f1d3fb.js" crossorigin="anonymous"></script> <!--retrieve admin bar icon-->
 <script src="modal.js" defer></script> <!-- modal, once connected-->
  
