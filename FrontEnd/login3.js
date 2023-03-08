@@ -30,7 +30,7 @@ const loginClick = function clickOnLogin(event) {
         form.appendChild(mailLabel);
         const mailInput = document.createElement("input");
         mailInput.setAttribute("type","email");
-        mailInput.setAttribute("id","email");
+        mailInput.setAttribute("id","email1");
         mailInput.setAttribute("required","");
         form.appendChild(mailInput);
         //password
@@ -68,8 +68,10 @@ navLogin.addEventListener("click", loginClick);
 async function submitLogin(event) {
         event.preventDefault();
         // body elemnts
-        const email = document.querySelector("#email").value;
+        const email = document.querySelector("#email1").value;
         const password = document.querySelector("#password").value;
+        alert(email);
+        alert(password);
         // define fetch post config object
         const postMethod = {
             method: "POST",
@@ -82,6 +84,7 @@ async function submitLogin(event) {
         // Fetch post
         const postInputs = await fetch("http://localhost:5678/api/users/login", postMethod);
         const fetchPostData = await postInputs.json();
+        alert(postInputs.status);
         console.log(fetchPostData);
         console.log(postInputs);
         if (postInputs.status == 200){
@@ -128,7 +131,7 @@ if (token){ //visual changes
 } ;
 /* logout */
 document.querySelector("#logout").addEventListener("click", function(){
-    localStorage.removeItem("token");
+    localStorage.clear();
     window.location.replace("");
 });
 

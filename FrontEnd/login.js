@@ -124,6 +124,6 @@ if (token){ //visual changes
 } ;
 /* logout */
 document.querySelector("#logout").addEventListener("click", function(){
-    localStorage.removeItem("token");
+    localStorage.clear();
     window.location.replace("");
 });

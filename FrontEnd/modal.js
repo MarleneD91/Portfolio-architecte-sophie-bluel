@@ -67,9 +67,21 @@ document.querySelectorAll(".js-modal").forEach(a => {
 fetchData().then(function(projects) {
     for (let i = 0; i<projects.length; i++){
         const cardsContainer = document.getElementById("cards-container");
+        const card = document.createElement("figure");
+        card.setAttribute("class", "project-card");
         const projectImgUrl = projects[i].imageUrl;
         const projectImg = document.createElement("img");
-        
+        projectImg.setAttribute("src", projectImgUrl);
+        projectImg.setAttribute("alt", projects[i].title);
+        projectImg.setAttribute("class","project-img")
+        card.appendChild(projectImg);
+        const imgCaption = document.createElement("figcaption");
+        imgCaption.setAttribute("class","figcaption");
+        imgCaption.innerText = "éditer";
+        card.appendChild(imgCaption);
+        cardsContainer.appendChild(card);
+
+
     }
 
 })
