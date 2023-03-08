@@ -1,79 +1,75 @@
-const token = window.localStorage.getItem("token");
-if (token){ //visual changes
+/* ------------------------- MODALS ------------------------- */
 
-    /* edition bar */
-    const adminSection = document.createElement("section");
-    adminSection.setAttribute("class", "admin-bar");
-    const html = document.querySelector("html");
-    const body = document.querySelector("body");
-    html.insertBefore(adminSection, body);
-    const editionIcon = document.createElement("i");
-    const iconPen = "fa-regular fa-pen-to-square edition";
-    editionIcon.setAttribute("class", iconPen);
-    adminSection.appendChild(editionIcon);
-    const editionP = document.createElement("p");
-    editionP.innerHTML = "Mode édition";
-    editionP.setAttribute("class","edition edition-txt");
-    adminSection.appendChild(editionP);
-    const editionButton = document.createElement("button");
-    editionButton.setAttribute("id", "edition-button");
-    editionButton.innerText = "publier les changements";
-    adminSection.appendChild(editionButton);  
+/* ### Edit home modal ### */
+let modal= null;
+
+
+//function / event
+const openModal = function (e) {
+    e.preventDefault();
+
+    // open modal
+    modal = document.querySelector(e.target.getAttribute('href'));
+    modal.style.display = null;
+    modal.removeAttribute ("aria-hidden");
+    modal.setAttribute("aria-modal","true");
+
+    //close modal 
+    modal.addEventListener('click', closeModal);
+    modal.querySelector(".js-modal-close").addEventListener("click", closeModal);
+    modal.querySelector(".js-modal-stop").addEventListener("click", stopPropagation);
+}
+// Close modal function
+const closeModal = function (e) {
+    if (modal === null) return;
+
+    e.preventDefault();
+
+    modal.style.display = "none";
+    modal.setAttribute ("aria-hidden", "true")
+    modal.removeAttribute("aria-modal");
+    modal.removeEventListener("click", closeModal)
+    modal.querySelector(".js-modal-close").removeEventListener("click", closeModal);
+    modal.querySelector(".js-modal-stop").removeEventListener("click", stopPropagation);
+    modal = null; 
     
-    /* hide filters section */
-    const filters = document.querySelector(".filters");
-    filters.style.display = "none";
+}
+// Stop propagation
+const stopPropagation = function(e) {
+    e.stopPropagation();
+}
 
-    /*"login" to "logout"*/
-    const login = document.querySelector("#login");
-    login.style.display = "none";
-    const logout = document.createElement("li");
-    logout.innerText = "logout";
-    logout.setAttribute("id", "logout");
-    const contact = document.querySelector("#contact");
-    contact.after(logout);
-
-    /* Architecte picture - add the caption - "change" */
-    const architectPicture = document.querySelector("#architect-picture");
-    const changeElement = document.createElement("div");
-    changeElement.setAttribute("class", "change-architect");
-    const changeIcon = document.createElement("i");
-    changeIcon.setAttribute("class", "fa-regular fa-pen-to-square change-icon");
-    changeElement.appendChild(changeIcon);
-    const changeTxt = document.createElement("p");
-    changeTxt.setAttribute("class", "change-txt")
-    changeTxt.innerText =  "modifier";
-    changeElement.appendChild(changeTxt);
-    architectPicture.appendChild(changeElement);
-
-    /* Project - add "change" */
-    const portfolio = document.querySelector("#portfolio");
-    const gallery = document.querySelector(".gallery")
-    const myProjects = document.createElement("div");
-    myProjects.setAttribute("class", "my-projects");
-    portfolio.insertBefore(myProjects, gallery);
-    const projectH2 = document.querySelector("#portfolio > h2");
-    myProjects.appendChild(projectH2);
-    const changeElement2 = document.createElement("div");
-    changeElement2.setAttribute("class", "change-projects");
-    const changeIcon2 = document.createElement("i");
-    changeIcon2.setAttribute("class", "fa-regular fa-pen-to-square change-icon");
-    changeElement2.appendChild(changeIcon2);
-    const changeTxt2 = document.createElement("p");
-    changeTxt2.setAttribute("class", "change-txt")
-    changeTxt2.innerText =  "modifier";
-    changeElement2.appendChild(changeTxt2);
-    architectPicture.appendChild(changeElement2);
-    projectH2.after(changeElement2);
-
-
-    
-    
-
-} ;
-/* logout */
-document.querySelector("#logout").addEventListener("click", function(){
-    localStorage.removeItem("token");
-    window.location.replace("");
+// add event listener
+document.querySelectorAll(".js-modal").forEach(a => {
+    a.addEventListener("click", openModal);
 });
 
+ window.addEventListener("keydown",function (e){
+    if ( e.key === "Escape" || e.key === "Esc") {
+        closeModal(e);
+    }
+    if (e.key === "Tab" && modal != null) {
+        focusInModal(e);
+    }
+ })
+
+ /* Load the gallery in the modal */
+ async function fetchData () {
+    const fetchProjects = await fetch ("http://localhost:5678/api/works");
+    const projects = await fetchProjects.json();
+    console.log(projects);
+    if (fetchProjects.ok) {
+        return projects;
+    } else {
+        console.log ("error");
+    };
+};
+fetchData().then(function(projects) {
+    for (let i = 0; i<projects.length; i++){
+        const cardsContainer = document.getElementById("cards-container");
+        const projectImgUrl = projects[i].imageUrl;
+        const projectImg = document.createElement("img");
+        
+    }
+
+})
