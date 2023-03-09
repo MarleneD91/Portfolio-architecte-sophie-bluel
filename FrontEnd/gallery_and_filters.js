@@ -36,7 +36,7 @@ async function fetchData () {
 fetchData()
 .then( projects => { // use the .json response to store the collected datas
 
-    gallery.innerHTML = " ";
+    gallery.innerHTML = "";
 
     /* Loop to get the datas (projects infos + categories) into arrays */
     for (let i=0; i<projects.length; i++) {
@@ -85,10 +85,10 @@ fetchData()
         e.preventDefault();
         buttonId = e.target.getAttribute("id");
         console.log(buttonId);
+        gallery.innerHTML="";
         if (buttonId == "all"){ // For the "Tous" button, display all the projects
             displayProjects(projects);
         } else { // For the others button, the projects displayed match the buttons categories
-            gallery.innerHTML = "";
                 const filteredProjects = projects.filter(function(project){
                     return project.category.name == buttonId;
                 });
