@@ -30,7 +30,7 @@ const loginClick = function clickOnLogin(event) {
         form.appendChild(mailLabel);
         const mailInput = document.createElement("input");
         mailInput.setAttribute("type","email");
-        mailInput.setAttribute("id","email1");
+        mailInput.setAttribute("id","email");
         mailInput.setAttribute("required","");
         form.appendChild(mailInput);
         //password
@@ -68,7 +68,7 @@ navLogin.addEventListener("click", loginClick);
 async function submitLogin(event) {
         event.preventDefault();
         // body elemnts
-        const email = document.querySelector("#email1").value;
+        const email = document.querySelector("#email").value;
         const password = document.querySelector("#password").value;
         alert(email);
         alert(password);

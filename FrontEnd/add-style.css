@@ -190,7 +190,6 @@
     display: none;
 }
 #edit-container {
-    width: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -205,7 +204,7 @@
 }
 
 #add-modal-link {
-    width:60%;
+    width:45%;
     margin-bottom: 10px;
 /* Other styles : same as login submit button, see above */
 }
