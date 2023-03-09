@@ -1,41 +1,90 @@
 /* -------- LOGIN SECTION -------- */
 
-const loginSection = document.querySelector("#login-section");
-const mainTag = document.querySelector("main");
 
 const loginClick = function clickOnLogin(event) {
     event.preventDefault();
-    loginSection.style.display = null;
-    mainTag.style.display = "none";
-};
-const loginNav= document.querySelector("#login");
-loginNav.addEventListener("click", loginClick)
+// 1 -HTML  (+CSS) STRUCTURE
+    var main = document.querySelector("main");
+    main.innerHTML = "";
 
-// add the submit event listener on the login button
-const loginButton = document.querySelector("#submit-button");
-loginButton.addEventListener("submit", submitLogin);
+    // login section 
+    const loginSection = document.createElement("section");
+    loginSection.setAttribute("id", "login-section");
+    main.appendChild(loginSection);
 
-/* -------------------- POST THE ID/PSWD, ALERT IF SUCCESS OR NOT -------------------- */
+    // title
+    const loginTitle = document.createElement("h2");
+    loginTitle.innerText = "Log In";
+    loginTitle.setAttribute("id", "loginTitle");
+    loginSection.appendChild(loginTitle);
+
+    // Form
+    const form = document.createElement("form");
+    form.setAttribute("id","login-form");
+    form.setAttribute("method","post");
+    loginSection.appendChild(form);
+        //email
+        const mailLabel = document.createElement("label");
+        mailLabel.setAttribute("for","email");
+        mailLabel.innerHTML = "E-mail";
+        form.appendChild(mailLabel);
+        const mailInput = document.createElement("input");
+        mailInput.setAttribute("type","email");
+        mailInput.setAttribute("id","email");
+        mailInput.setAttribute("required","");
+        form.appendChild(mailInput);
+        //password
+        const passwordLabel = document.createElement("label");
+        passwordLabel.setAttribute("for","password");
+        passwordLabel.innerHTML = "Mot de passe";
+        form.appendChild(passwordLabel);
+        const passwordInput = document.createElement("input");
+        passwordInput.setAttribute("type","password");
+        passwordInput.setAttribute("id","password");
+        passwordInput.setAttribute("required","");
+        form.appendChild(passwordInput);
+        //submit
+        var submit = document.createElement("input");
+        submit.setAttribute("type","submit");
+        submit.setAttribute("id","submit-button");
+        submit.setAttribute("value","Se connecter");
+        submit.addEventListener("click", submitLogin);
+        form.appendChild(submit);
+        //password forgotten
+        const forgotPassword =  document.createElement("a");
+        forgotPassword.setAttribute("href","#forgot-password");
+        forgotPassword.setAttribute("class","forgot-password");
+        forgotPassword.innerText = "Mot de passe oublié";
+        form.appendChild(forgotPassword);
+    };
+
+// 2- EVENT LISTENER, click on nav 'login'
+const navLogin = document.querySelector("#login");
+navLogin.addEventListener("click", loginClick);
+
+// 3- POST THE ID/PSWD, ALERT IF SUCCESS OR NOT
 
 // submit id + pwd function
-const submitLogin = async function submitLogin(e) {
-        
-        // body elements
+async function submitLogin(event) {
+        event.preventDefault();
+        // body elemnts
         const email = document.querySelector("#email").value;
         const password = document.querySelector("#password").value;
+        alert(email);
+        alert(password);
         // define fetch post config object
         const postMethod = {
-            method: 'post',
-            headers: { "Content-Type": "application/json",
-                        "Accept" : "application/json" },
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 email: email,
                 password: password,
-            }),
-        };
+            })
+        }
         // Fetch post
         const postInputs = await fetch("http://localhost:5678/api/users/login", postMethod);
         const fetchPostData = await postInputs.json();
+        alert(postInputs.status);
         console.log(fetchPostData);
         console.log(postInputs);
         if (postInputs.status == 200){
@@ -47,52 +96,10 @@ const submitLogin = async function submitLogin(e) {
         } else if (postInputs.status == 404) {
                 alert("Mot de passe et/ou identifiant invalide(s)")
         }   
-        e.preventDefault();
     };        
      
-
-   
-
-/*
-document
-  .getElementById("submit-button")
-  .addEventListener("click", function(e) {
-    let user = {
-        email: document.querySelector("#email").value,
-        password: document.querySelector("#password").value
-      };
-    console.log(JSON.stringify(user));
-    fetch('http://localhost:5678/api/users/login', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(user)
-        })
-        .then(function(res) {
-          if (res.ok) {
-            return res.json();
-          }
-          else if (res.status == 401) {
-            alert ("Mot de passe invalide");
-        } else if (res.status == 404) {
-            alert("Mot de passe et/ou identifiant invalide(s)");
-        }
-        })
-        .then(function(value) {
-          localStorage.setItem("token", value.token);
-          document.location.href="index.html";
-          alert("Bienvenue sur le site!");
-        })
-        .catch(function(err) {
-          alert("wrong");
-        });
-});
-*/
-
-
-/* ------------------------- CHANGES IN HOME PAGE IF USER IS CONNECTED ------------------------- */
+    
+   /* ------------------------- CHANGES IN HOME PAGE IF USER IS CONNECTED ------------------------- */
 const token = window.localStorage.getItem("token");
 if (token){ //visual changes
 
@@ -127,3 +134,6 @@ document.querySelector("#logout").addEventListener("click", function(){
     localStorage.clear();
     window.location.replace("");
 });
+
+
+
