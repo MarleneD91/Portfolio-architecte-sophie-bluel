@@ -94,7 +94,7 @@ fetchData().then(function(projects) {
 
 });
 
-/* ############# EDIT MODAL : ADD PICTURE ############# */
+/* ############# EDIT MODAL : DELETE PROJECT ############# */
 //const token = localStorage.getItem("token"); // retrieve token for fetch authorization
 
 const deleteProject = function (e) {
@@ -103,18 +103,18 @@ const deleteProject = function (e) {
     if(confirmDial) {
         async function fetchDelete(){
             console.log(e.target);
-            const projectId = parseInt(e.target.id);
+            const projectId = e.target.id;
             console.log(projectId);
 
             const deleteUrl = "http://localhost:5678/api/works/" + projectId
+            console.log(deleteUrl);
             const deleteRequest = await fetch (deleteUrl, {
                 method : "DELETE",
                 headers : { 
                     "accept":"*/*",
-                    "Authorization":"Bearer " + token
-                 },
-                body: projectId,
-            })
+                    "Authorization":"Bearer " + token,
+                 }
+            }); 
             const deleteResponse = await deleteRequest.json();
             console.log(deleteResponse);
 
@@ -127,7 +127,7 @@ const deleteProject = function (e) {
             } else if (deleteResponse.status == 500) {
                     alert("Un comportement innatendu est survenu.")
             }  
-        };
+        }
         fetchDelete();
     }
 }
@@ -136,5 +136,36 @@ const deleteProject = function (e) {
     icon.addEventListener("click", deleteProject);
 });*/
 
-
 console.log(allProjects);
+// A REVOIR : pb json data !!
+
+/* ############# EDIT MODAL : ADD RPOJECT ############# */
+const modalContainer = document.getElementById("modal-container");
+const modalWrapper = document.querySelector(".modal-wrapper");
+console.log(modalWrapper);
+
+/* First, switch to the add project form */
+const switchToAdd = function displayAddForm(e){
+    e.preventDefault();
+    modalContainer.innerHTML = "";
+    const arrow = document.createElement("i");
+    arrow.setAttribute("class","fa-solid fa-arrow-left-long arrow-back");
+    arrow.innerHTML = "<p>Revenir en arrière</p>";
+    modalWrapper.insertBefore(arrow, modalContainer);
+    const addModalInnerHTML = document.getElementById("add-modal-innerHTML");
+    modalContainer.innerHTML= addModalInnerHTML.innerHTML;
+}
+// Add the event listener on the add button link 
+document.getElementById("add-modal-link").addEventListener("click", switchToAdd);
+
+/* RESTE :
+Il serait intéressant de créer les options de select à partir de la liste des catégories de la base de donnnées.
+Il faut ajouter le retour à la galerie sur la flèche back(addEventlistener? mais pour reload la gallerie...).
+Il faut voir comment faire pour que le bouton valider soit vert une fois tous les champs remplis (if value != null ?)
+Il faut s'occuper de l'erreur JSON parse de la promesse pour la suppresion d'un élément (même si ce dernier est bien supprimé)
+Question: pourquoi l'id augmente et n'est pas remplacé ? Avec delete, l'emplacement n'est pas vidé... Comment régler ce problème ?
+Il faut pouvoir supprimer la galerie entière de la même façon qu'un seul élément en cliquant sur "Supprimer la galerie" -> if avec l'id du bouton ? (en reprenant la fonction qui fetch delete)
+Il faut pouvoir voir l'image dès son ajout au niveau du container.
+Après ajout ou suppression d'un projet, la gallery (celle crée dans le script consacré) doit pouvoir se rafraichir automatiquement
+Il y a une revision de code à effectuer pour rendre celui-ci plus clair, faciliter sa lecture et créer des points d'arrêt dans la page afin de mieux visualiser les différentes parties. 
+*/

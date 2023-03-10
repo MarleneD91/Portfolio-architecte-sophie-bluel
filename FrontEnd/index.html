@@ -108,44 +108,46 @@
 		</ul>
 	</nav>
 </footer>
-<!-- ###################### MODALS ###################### -->
-	<!-- Modal 1/2 : edit-modal -->
+<!-- ###################### MODAL ###################### -->
 	<aside id="edit-modal" class="modal" style="display:none" aria-hidden="true" role="dialog" aria-labelledby="edit-title">
 		<div class="modal-wrapper js-modal-stop">
 			<i class="fa-solid fa-xmark js-modal-close"><p>Fermer la modale</p></i>
-			<div id="edit-container">
-				<h3 id="edit-title">Galerie photo</h3>
+			<div id="modal-container">
+				<h3 class="modal-title">Galerie photo</h3>
 				<div id="cards-container">
-				<!-- script modal 1 : projects cards-->
+				<!-- script : projects cards-->
 				</div>
 				<button id="add-modal-link">Ajouter une photo</button>
 				<a id="delete-modal-link">Supprimer la galerie</a>
 			</div>
 		</div>
 	</aside>		
-	<!-- Modal 2/2 : add-modal -->
-	<aside id="add-modal" style="display:none">
-		<i class="fa-solid fa-xmark quit-icon"></i>
-		<div id="add-container">
-			<h3 id="edit-title">Ajout photo</h3>
-			<form id="add-project" method="post">
-				<div id="add-picture">
-					<button id="add-picture-button">+ Ajouter photo</button>
-					<label for="add-picture-button">jpg, png : 4Mo max.</label>
+	<!-- For 'add pictures'  -->
+	<div id="add-modal-innerHTML" style="display:none">
+		<h3 class="modal-title">Ajout photo</h3>
+		<form id="new-project-form">
+			<div id="new-project-info">
+				<div id="add-picture-container">
+					<i class="fa-regular fa-file-image img-icon"></i>
+					<input type="file" accept="image/png, image/jpg" id="file-input" name="file-input" required>
+					<label for="file-input" id="file-input-label">+ Ajouter photo</label>
+					<output></output>
+					<p id="file-restrictions">jpg, png : 4mo max</p>
 				</div>
-				<div id="add-picture-info">
-					<label for="add-picture-title">Titre</label>
-					<input id="add-picture-title" type="text" name="title" required>
-					<label for="add-picture-category">Catégorie</label>
-					<select id="add-picture-category" type="select" name="category" required>
-				</div>
-				<button id="add-modal-link">Ajouter une photo</button>
-				<p id="delete-modal-link">Supprimer la galerie</p>
-			</form>
-			<button id="submit-new-project" type="submit" formmethod="post">Valider</button>
-		</div>
-	</aside>
-	<!-- ###################### END MODALS ###################### -->
+				<label for="new-project-title">Titre</label></br>
+				<input type="text" id="new-project-title" name="new-project-title" required></br>
+				<label for="new-project-category">Catégorie</label></br>
+				<select name="new-project-category" id="new-project-category">
+					<option value="null">Choisissez une catégorie</option>
+					<option value="1">Objets</option>
+					<option value="2">Appartements</option>
+					<option value="3">Hotels & restaurants</option>
+				</select>
+			</div>
+			<button type="submit" id="submit-new-project" disabled="disabled">Valider</button>
+		</form>
+	</div>
+	<!-- ###################### END MODAL ###################### -->
 
 </div>
 
