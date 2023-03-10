@@ -26,7 +26,7 @@ const loginClick = function clickOnLogin(event) {
         //email
         const mailLabel = document.createElement("label");
         mailLabel.setAttribute("for","email");
-        mailLabel.innerHTML = "E-mail";
+        mailLabel.innerText = "E-mail";
         form.appendChild(mailLabel);
         const mailInput = document.createElement("input");
         mailInput.setAttribute("type","email");
@@ -36,7 +36,7 @@ const loginClick = function clickOnLogin(event) {
         //password
         const passwordLabel = document.createElement("label");
         passwordLabel.setAttribute("for","password");
-        passwordLabel.innerHTML = "Mot de passe";
+        passwordLabel.innerText = "Mot de passe";
         form.appendChild(passwordLabel);
         const passwordInput = document.createElement("input");
         passwordInput.setAttribute("type","password");
@@ -78,7 +78,7 @@ async function submitLogin(event) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 email: email,
-                password: password,
+                password: password
             })
         }
         // Fetch post
