@@ -113,40 +113,44 @@
 		<div class="modal-wrapper js-modal-stop">
 			<i class="fa-solid fa-xmark js-modal-close"><p>Fermer la modale</p></i>
 			<div id="modal-container">
-				<h3 class="modal-title">Galerie photo</h3>
-				<div id="cards-container">
-				<!-- script : projects cards-->
+				<!-- Home edit -->
+				<div id="home-edit-modal" style="display: null;" class="inner-modal">
+					<h3 class="modal-title">Galerie photo</h3>
+					<div id="cards-container">
+					<!-- script : projects cards-->
+					</div>
+					<button id="add-modal-link">Ajouter une photo</button>
+					<a id="delete-modal-link">Supprimer la galerie</a>
 				</div>
-				<button id="add-modal-link">Ajouter une photo</button>
-				<a id="delete-modal-link">Supprimer la galerie</a>
+				<!-- For 'add pictures'  -->
+				<div id="add-modal" style="display: none;" class="inner-modal">
+					<h3 class="modal-title">Ajout photo</h3>
+					<form id="new-project-form">
+						<div id="new-project-info">
+							<div id="add-picture-container">
+								<i class="fa-regular fa-file-image img-icon"></i>
+								<input type="file" accept="image/png, image/jpg" id="file-input" name="file-input" required>
+								<label for="file-input" id="file-input-label">+ Ajouter photo</label>
+								<output></output>
+								<p id="file-restrictions">jpg, png : 4mo max</p>
+							</div>
+							<label for="new-project-title">Titre</label></br>
+							<input type="text" id="new-project-title" name="new-project-title" required></br>
+							<label for="new-project-category">Catégorie</label></br>
+							<select name="new-project-category" id="new-project-category">
+								<option value="null">Choisissez une catégorie</option>
+								<!--<option value="1">Objets</option>
+								<option value="2">Appartements</option>
+								<option value="3">Hotels & restaurants</option> -->
+							</select>
+						</div>
+						<button type="submit" id="submit-new-project" disabled="disabled">Valider</button>
+					</form>
+				</div>
 			</div>
 		</div>
 	</aside>		
-	<!-- For 'add pictures'  -->
-	<div id="add-modal-innerHTML" style="display:none">
-		<h3 class="modal-title">Ajout photo</h3>
-		<form id="new-project-form">
-			<div id="new-project-info">
-				<div id="add-picture-container">
-					<i class="fa-regular fa-file-image img-icon"></i>
-					<input type="file" accept="image/png, image/jpg" id="file-input" name="file-input" required>
-					<label for="file-input" id="file-input-label">+ Ajouter photo</label>
-					<output></output>
-					<p id="file-restrictions">jpg, png : 4mo max</p>
-				</div>
-				<label for="new-project-title">Titre</label></br>
-				<input type="text" id="new-project-title" name="new-project-title" required></br>
-				<label for="new-project-category">Catégorie</label></br>
-				<select name="new-project-category" id="new-project-category">
-					<option value="null">Choisissez une catégorie</option>
-					<option value="1">Objets</option>
-					<option value="2">Appartements</option>
-					<option value="3">Hotels & restaurants</option>
-				</select>
-			</div>
-			<button type="submit" id="submit-new-project" disabled="disabled">Valider</button>
-		</form>
-	</div>
+
 	<!-- ###################### END MODAL ###################### -->
 
 </div>

@@ -192,6 +192,12 @@
     display: none;
 }
 #modal-container {
+    width:100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+.inner-modal {
     display: flex;
     flex-direction: column;
     align-items: center;

@@ -1,12 +1,21 @@
 /* ------------------------- MODALS ------------------------- */
 
+//Global const
+const modalContainer = document.getElementById("modal-container");
+const modalWrapper = document.querySelector(".modal-wrapper");
+const homeEditModal = document.querySelector("#home-edit-modal");
+const addEditModal = document.querySelector("#add-modal");
+let arrow = null;
+let modal= null;
+
 /* ############# EDIT MODAL HOME ############# */
 
-let modal= null;
 
 //function / event
 const openModal = function (e) {
     e.preventDefault();
+    homeEditModal.style.display = null;   
+    addEditModal.style.display = "none"; 
 
     // open modal
     modal = document.querySelector(e.target.getAttribute('href'));
@@ -31,7 +40,9 @@ const closeModal = function (e) {
     modal.removeEventListener("click", closeModal)
     modal.querySelector(".js-modal-close").removeEventListener("click", closeModal);
     modal.querySelector(".js-modal-stop").removeEventListener("click", stopPropagation);
-    modal = null; 
+    modal = null;
+    arrow.remove(); 
+   
     
 }
 // Stop propagation
@@ -140,26 +151,51 @@ console.log(allProjects);
 // A REVOIR : pb json data !!
 
 /* ############# EDIT MODAL : ADD RPOJECT ############# */
-const modalContainer = document.getElementById("modal-container");
-const modalWrapper = document.querySelector(".modal-wrapper");
+
 console.log(modalWrapper);
 
 /* First, switch to the add project form */
 const switchToAdd = function displayAddForm(e){
     e.preventDefault();
-    modalContainer.innerHTML = "";
-    const arrow = document.createElement("i");
+    homeEditModal.style.display = "none";
+    addEditModal.style.display = null;
+    arrow = document.createElement("i");
     arrow.setAttribute("class","fa-solid fa-arrow-left-long arrow-back");
     arrow.innerHTML = "<p>Revenir en arrière</p>";
     modalWrapper.insertBefore(arrow, modalContainer);
-    const addModalInnerHTML = document.getElementById("add-modal-innerHTML");
-    modalContainer.innerHTML= addModalInnerHTML.innerHTML;
-}
+
+ /*   //for the categories
+    const selectCategory = document.getElementById("new-project-category");
+    console.log(selectCategory);
+    let optionValue = 1;
+    categoriesArray.forEach(function createOption(category){
+        const categoryOption = document.createElement("option");
+        categoryOption.setAttribute("value", optionValue);
+        categoryOption.innerText = category;
+        console.log(category)
+        selectCategory.appendChild(categoryOption);
+        console.log (categoryOption);
+        optionValue += 1;
+    });
+    // Problem : categories not in the right order, need to fetch get the categories ? */
+
+    /* Arrow : back to home edit modal */
+    const backToHomeModal = function(e){
+        e.preventDefault();
+        homeEditModal.style.display = null;   
+        addEditModal.style.display = "none";
+        arrow.remove();
+    };
+    arrow.addEventListener("click", backToHomeModal);
+};
 // Add the event listener on the add button link 
 document.getElementById("add-modal-link").addEventListener("click", switchToAdd);
 
+/* Arrow : back to home edit modal */
+
+
 /* RESTE :
-Il serait intéressant de créer les options de select à partir de la liste des catégories de la base de donnnées.
+
 Il faut ajouter le retour à la galerie sur la flèche back(addEventlistener? mais pour reload la gallerie...).
 Il faut voir comment faire pour que le bouton valider soit vert une fois tous les champs remplis (if value != null ?)
 Il faut s'occuper de l'erreur JSON parse de la promesse pour la suppresion d'un élément (même si ce dernier est bien supprimé)
@@ -168,4 +204,4 @@ Il faut pouvoir supprimer la galerie entière de la même façon qu'un seul él�
 Il faut pouvoir voir l'image dès son ajout au niveau du container.
 Après ajout ou suppression d'un projet, la gallery (celle crée dans le script consacré) doit pouvoir se rafraichir automatiquement
 Il y a une revision de code à effectuer pour rendre celui-ci plus clair, faciliter sa lecture et créer des points d'arrêt dans la page afin de mieux visualiser les différentes parties. 
-*/
+Si on ouvre à nouveau la modal, on doit tomber sur la gallery!*/
