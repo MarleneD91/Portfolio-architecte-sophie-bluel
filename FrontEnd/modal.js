@@ -1,17 +1,39 @@
-/* ------------------------- MODALS ------------------------- */
+/* -x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x- MODALS -x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x- */
 
-//Global const
+// Variables - Global range
+
+// modal blocks & elements
 const modalContainer = document.getElementById("modal-container");
 const modalWrapper = document.querySelector(".modal-wrapper");
 const homeEditModal = document.querySelector("#home-edit-modal");
 const addEditModal = document.querySelector("#add-modal");
 let arrow = null;
-let modal= null;
+let modal = null;
 
-/* ############# EDIT MODAL HOME ############# */
+// "add" form elements
+    //Form
+    const addForm = document.getElementById("new-project-form");
+    //Inputs
+    const newProjectFileInput = document.getElementById("file-input");
+    const newProjectTitle = document.getElementById("new-project-title");
+    const newProjectCategory = document.getElementById("new-project-category");
+    //File Input
+    const beforeAddingImage = document.getElementById("before-adding-pic");
+    const imagePreviewDiv = document.getElementById("preview");
+    const incorrectImageSize = document.getElementById("incorrect-image-size"); // Warning p for img size
+    const maxImageSize = 4000 * 1024;
+    // Get add form inputs values
+    let newTitleValue = newProjectTitle.value;
+    let newCategoryValue = newProjectCategory.value;
+    let newProjectImage = null;
+    // Submmit button
+    const submitNewProject = document.getElementById("submit-new-project");
 
+// ############################################################################################################
+/* ########################################### EDIT MODAL : HOME ########################################### */
+// ############################################################################################################
 
-//function / event
+//Open Modal function
 const openModal = function (e) {
     e.preventDefault();
     homeEditModal.style.display = null;   
@@ -27,7 +49,8 @@ const openModal = function (e) {
     modal.addEventListener('click', closeModal);
     modal.querySelector(".js-modal-close").addEventListener("click", closeModal);
     modal.querySelector(".js-modal-stop").addEventListener("click", stopPropagation);
-}
+};
+
 // Close modal function
 const closeModal = function (e) {
     if (modal === null) return;
@@ -42,9 +65,15 @@ const closeModal = function (e) {
     modal.querySelector(".js-modal-stop").removeEventListener("click", stopPropagation);
     modal = null;
     arrow.remove(); 
-   
-    
+
+    beforeAddingImage.style.display = null;
+    imagePreviewDiv.style.display = "none";
+
+    // cLear the project inputs
+    addForm.reset();
+
 }
+
 // Stop propagation
 const stopPropagation = function(e) {
     e.stopPropagation();
@@ -55,19 +84,19 @@ document.querySelectorAll(".js-modal").forEach(a => {
     a.addEventListener("click", openModal);
 });
 
- window.addEventListener("keydown",function (e){
+window.addEventListener("keydown",function (e){
     if ( e.key === "Escape" || e.key === "Esc") {
         closeModal(e);
     };
     if (e.key === "Tab" && modal != null) {
         focusInModal(e);
     };
- });
+});
 
- /* Load the gallery in the modal */
+/* Load the gallery in the modal */
 
 
- async function fetchData () {
+async function fetchData () {
     const fetchProjects = await fetch ("http://localhost:5678/api/works");
     const projects = await fetchProjects.json();
     console.log(projects);
@@ -101,11 +130,12 @@ fetchData().then(function(projects) {
         cardsContainer.appendChild(card);
 
     };
-
-
 });
 
-/* ############# EDIT MODAL : DELETE PROJECT ############# */
+// #############################################################################################################
+/* ##################################### EDIT MODAL : DELETE PROJECT(S) ##################################### */
+// #############################################################################################################
+
 //const token = localStorage.getItem("token"); // retrieve token for fetch authorization
 
 const deleteProject = function (e) {
@@ -143,14 +173,9 @@ const deleteProject = function (e) {
     }
 }
 
-/*document.querySelectorAll(".delete-icon").forEach(icon => {
-    icon.addEventListener("click", deleteProject);
-});*/
-
-console.log(allProjects);
-// A REVOIR : pb json data !!
-
-/* ############# EDIT MODAL : ADD RPOJECT ############# */
+// ############################################################################################################
+/* #######################################  EDIT MODAL : ADD RPOJECT ####################################### */
+// ############################################################################################################
 
 /* First, switch to the add project form */
 const switchToAdd = function displayAddForm(e){
@@ -161,21 +186,8 @@ const switchToAdd = function displayAddForm(e){
     arrow.setAttribute("class","fa-solid fa-arrow-left-long arrow-back");
     arrow.innerHTML = "<p>Revenir en arrière</p>";
     modalWrapper.insertBefore(arrow, modalContainer);
+    incorrectImageSize.innerHTML = " ";
 
- /*   //for the categories
-    const selectCategory = document.getElementById("new-project-category");
-    console.log(selectCategory);
-    let optionValue = 1;
-    categoriesArray.forEach(function createOption(category){
-        const categoryOption = document.createElement("option");
-        categoryOption.setAttribute("value", optionValue);
-        categoryOption.innerText = category;
-        console.log(category)
-        selectCategory.appendChild(categoryOption);
-        console.log (categoryOption);
-        optionValue += 1;
-    });
-    // Problem : categories not in the right order, need to fetch get the categories ? */
 
     /* Arrow : back to home edit modal */
     const backToHomeModal = function(e){
@@ -183,29 +195,18 @@ const switchToAdd = function displayAddForm(e){
         homeEditModal.style.display = null;   
         addEditModal.style.display = "none";
         arrow.remove();
+        beforeAddingImage.style.display = null;
+        imagePreviewDiv.style.display = "none";
+        // cLear the form
+        addForm.reset();
+
     };
     arrow.addEventListener("click", backToHomeModal);
-
-    // cLear the project inputs
-    newProjectImage = null;
-    newProjectTitle = null;
-    newProjectCategory = null;
 };
 // Add the event listener on the add button link 
 document.getElementById("add-modal-link").addEventListener("click", switchToAdd);
 
-// Get inputs values
-const newProjectFileInput = document.getElementById("file-input");
-let newProjectImage = null;
-let newProjectTitle = document.getElementById("new-project-title").value;
-let newProjectCategory = document.getElementById("new-project-category").value;
-const beforeAddingImage = document.getElementById("before-adding-pic");
-const imagePreviewDiv = document.getElementById("preview");
 
-
-// Disable or enable the submmit button
-const submitNewProject = document.getElementById("submit-new-project");
-//if (newProjectImage == null && newProjectTitle == null && )
 
 // Img preview + size
 const showImagePreview = function (e){
@@ -214,33 +215,23 @@ const showImagePreview = function (e){
     console.log(newProjectImage);
 
     //For size
-    const maxImageSize = 4000 * 1024;
-    const incorrectImageSize = document.getElementById("incorrect-image-size");
     if (newProjectImage.size > maxImageSize){
         imagePreviewDiv.style.display = "none";
-        incorrectImageSize.style.display = null;
         incorrectImageSize.innerText = "La taille de l'image dépasse 4Mo.";
     } else {
-        incorrectImageSize.style.display = "none";
+        incorrectImageSize.innerText = " ";
         beforeAddingImage.style.display = "none";
-        imagePreviewDiv.style.display = null; 
-        const imageURL = URL.createObjectURL(newProjectImage);
+        imagePreviewDiv.style.display = null;
+        imagePreviewDiv.innerHTML= "";
+        const imageUrl = URL.createObjectURL(newProjectImage);
         const imagePreview = document.createElement("img");
         imagePreview.setAttribute("id", "image-preview");
-        imagePreview.setAttribute("src", imageURL);
+        imagePreview.setAttribute("src", imageUrl);
         imagePreviewDiv.appendChild(imagePreview);
 
     };
 }
 newProjectFileInput.addEventListener("change", showImagePreview);
-
-/*const reader = new FileReader()
-reader.onload = async (event) => {
-    document.getElementById("preview").setAttribute('src', event.target.result);
-    beforeAddingImage.style.visibility = "hidden";
-}
-reader.readAsDataURL(newProjectImage)*/
-// DO NOT WORK, THE UPLOADING INPUT STAYS THE SAME 
 
 
 
@@ -251,7 +242,37 @@ Il faut voir comment faire pour que le bouton valider soit vert une fois tous le
 Il faut s'occuper de l'erreur JSON parse de la promesse pour la suppresion d'un élément (même si ce dernier est bien supprimé)
 Question: pourquoi l'id augmente et n'est pas remplacé ? Avec delete, l'emplacement n'est pas vidé... Comment régler ce problème ?
 Il faut pouvoir supprimer la galerie entière de la même façon qu'un seul élément en cliquant sur "Supprimer la galerie" -> if avec l'id du bouton ? (en reprenant la fonction qui fetch delete)
-Il faut pouvoir voir l'image dès son ajout au niveau du container.
+
 Après ajout ou suppression d'un projet, la gallery (celle crée dans le script consacré) doit pouvoir se rafraichir automatiquement
 Il y a une revision de code à effectuer pour rendre celui-ci plus clair, faciliter sa lecture et créer des points d'arrêt dans la page afin de mieux visualiser les différentes parties. 
 Si on ouvre à nouveau la modal, on doit tomber sur la gallery!*/
+
+// Submit new project
+
+
+const checkForm = function(e){
+    e.preventDefault();
+
+    if ( newProjectFileInput.files.length > 0 && newProjectFileInput.files[0].size <= maxImageSize
+    && newTitleValue != null && newCategoryValue > 0 ) {
+        submitNewProject.style.backgroundColor = "#1D6154";
+
+        /*async*/ function clickAndSubmit(e){
+            e.preventDefault();
+
+            newProjectImage = newProjectFileInput.files[0];
+
+            const projectData = new FormData();
+            projectData.append("title", newTitleValue);
+            projectData.append("imageUrl", newProjectFileInput.files[0]);
+            projectData.append("categoryId", newCategoryValue)
+            
+            console.log(projectData);
+
+        }
+        submitNewProject.addEventListener("submit", clickAndSubmit(e));
+    };
+};
+newProjectTitle.addEventListener("change", checkForm);
+newProjectCategory.addEventListener("change", checkForm);
+newProjectFileInput.addEventListener("change", checkForm);

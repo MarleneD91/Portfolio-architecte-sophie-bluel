@@ -351,5 +351,8 @@
     object-fit: contain;
     width: 100%;
 }
+#submit-new-project {
+    background-color: #A7A7A7;
+}
 /* #new-project-title, #new-project-category : see login inputs 
-#submit-new-projct (button) : see login page style*/
+#submit-new-project (shape) : see login page style*/
