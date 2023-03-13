@@ -200,13 +200,15 @@ let newProjectImage = null;
 let newProjectTitle = document.getElementById("new-project-title").value;
 let newProjectCategory = document.getElementById("new-project-category").value;
 const beforeAddingImage = document.getElementById("before-adding-pic");
+const imagePreviewDiv = document.getElementById("preview");
+
 
 // Disable or enable the submmit button
 const submitNewProject = document.getElementById("submit-new-project");
 //if (newProjectImage == null && newProjectTitle == null && )
 
 // Img preview + size
-const imagePreview = function (e){
+const showImagePreview = function (e){
     e.preventDefault();
     newProjectImage = newProjectFileInput.files[0];
     console.log(newProjectImage);
@@ -214,15 +216,23 @@ const imagePreview = function (e){
     //For size
     const maxImageSize = 4000 * 1024;
     const incorrectImageSize = document.getElementById("incorrect-image-size");
-
     if (newProjectImage.size > maxImageSize){
+        imagePreviewDiv.style.display = "none";
         incorrectImageSize.style.display = null;
         incorrectImageSize.innerText = "La taille de l'image dépasse 4Mo.";
     } else {
         incorrectImageSize.style.display = "none";
+        beforeAddingImage.style.display = "none";
+        imagePreviewDiv.style.display = null; 
+        const imageURL = URL.createObjectURL(newProjectImage);
+        const imagePreview = document.createElement("img");
+        imagePreview.setAttribute("id", "image-preview");
+        imagePreview.setAttribute("src", imageURL);
+        imagePreviewDiv.appendChild(imagePreview);
+
     };
 }
-newProjectFileInput.addEventListener("change", imagePreview);
+newProjectFileInput.addEventListener("change", showImagePreview);
 
 /*const reader = new FileReader()
 reader.onload = async (event) => {
@@ -232,18 +242,7 @@ reader.onload = async (event) => {
 reader.readAsDataURL(newProjectImage)*/
 // DO NOT WORK, THE UPLOADING INPUT STAYS THE SAME 
 
-// Restricting uploaded file size
-newProjectFileInput.addEventListener("change", function () {
-    if (newProjectFileInput.files.length > 0) {
-      const fileSize = newProjectImage.size;
-      const fileMb = fileSize / 1024 ** 2;
-        if (fileMb >= 4) {
-        alert("Merci de sélectionner une image inférieure à 4Mo.");
-        } else {
-        alert ("Image téléchargée.")
-        };
-    };
-  });
+
 
 /* RESTE :
 
