@@ -128,11 +128,18 @@
 					<form id="new-project-form">
 						<div id="new-project-info">
 							<div id="add-picture-container">
-								<i class="fa-regular fa-file-image img-icon"></i>
-								<input type="file" accept="image/png, image/jpg" id="file-input" name="file-input" required>
-								<label for="file-input" id="file-input-label">+ Ajouter photo</label>
-								<output></output>
-								<p id="file-restrictions">jpg, png : 4mo max</p>
+								<div id="before-adding-pic">
+									<i class="fa-regular fa-file-image img-icon"></i>
+									<input type="file" accept="image/jpeg, image/png" id="file-input" name="file-input" required>
+									<label for="file-input" id="file-input-label">+ Ajouter photo</label>
+									<output></output>
+									<p id="file-restrictions">jpg, png : 4mo max</p>
+									<p id="incorrect-image-size"></p>
+								</div>
+								<div id="preview">
+									<!-- Miniature of the added pic-->
+								</div>
+
 							</div>
 							<label for="new-project-title">Titre</label></br>
 							<input type="text" id="new-project-title" name="new-project-title" required></br>
@@ -144,7 +151,7 @@
 								<option value="3">Hotels & restaurants</option> -->
 							</select>
 						</div>
-						<button type="submit" id="submit-new-project" disabled="disabled">Valider</button>
+						<button type="submit" id="submit-new-project">Valider</button>
 					</form>
 				</div>
 			</div>

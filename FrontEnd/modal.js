@@ -152,8 +152,6 @@ console.log(allProjects);
 
 /* ############# EDIT MODAL : ADD RPOJECT ############# */
 
-console.log(modalWrapper);
-
 /* First, switch to the add project form */
 const switchToAdd = function displayAddForm(e){
     e.preventDefault();
@@ -187,16 +185,69 @@ const switchToAdd = function displayAddForm(e){
         arrow.remove();
     };
     arrow.addEventListener("click", backToHomeModal);
+
+    // cLear the project inputs
+    newProjectImage = null;
+    newProjectTitle = null;
+    newProjectCategory = null;
 };
 // Add the event listener on the add button link 
 document.getElementById("add-modal-link").addEventListener("click", switchToAdd);
 
-/* Arrow : back to home edit modal */
+// Get inputs values
+const newProjectFileInput = document.getElementById("file-input");
+let newProjectImage = null;
+let newProjectTitle = document.getElementById("new-project-title").value;
+let newProjectCategory = document.getElementById("new-project-category").value;
+const beforeAddingImage = document.getElementById("before-adding-pic");
 
+// Disable or enable the submmit button
+const submitNewProject = document.getElementById("submit-new-project");
+//if (newProjectImage == null && newProjectTitle == null && )
+
+// Img preview + size
+const imagePreview = function (e){
+    e.preventDefault();
+    newProjectImage = newProjectFileInput.files[0];
+    console.log(newProjectImage);
+
+    //For size
+    const maxImageSize = 4000 * 1024;
+    const incorrectImageSize = document.getElementById("incorrect-image-size");
+
+    if (newProjectImage.size > maxImageSize){
+        incorrectImageSize.style.display = null;
+        incorrectImageSize.innerText = "La taille de l'image dépasse 4Mo.";
+    } else {
+        incorrectImageSize.style.display = "none";
+    };
+}
+newProjectFileInput.addEventListener("change", imagePreview);
+
+/*const reader = new FileReader()
+reader.onload = async (event) => {
+    document.getElementById("preview").setAttribute('src', event.target.result);
+    beforeAddingImage.style.visibility = "hidden";
+}
+reader.readAsDataURL(newProjectImage)*/
+// DO NOT WORK, THE UPLOADING INPUT STAYS THE SAME 
+
+// Restricting uploaded file size
+newProjectFileInput.addEventListener("change", function () {
+    if (newProjectFileInput.files.length > 0) {
+      const fileSize = newProjectImage.size;
+      const fileMb = fileSize / 1024 ** 2;
+        if (fileMb >= 4) {
+        alert("Merci de sélectionner une image inférieure à 4Mo.");
+        } else {
+        alert ("Image téléchargée.")
+        };
+    };
+  });
 
 /* RESTE :
 
-Il faut ajouter le retour à la galerie sur la flèche back(addEventlistener? mais pour reload la gallerie...).
+
 Il faut voir comment faire pour que le bouton valider soit vert une fois tous les champs remplis (if value != null ?)
 Il faut s'occuper de l'erreur JSON parse de la promesse pour la suppresion d'un élément (même si ce dernier est bien supprimé)
 Question: pourquoi l'id augmente et n'est pas remplacé ? Avec delete, l'emplacement n'est pas vidé... Comment régler ce problème ?
