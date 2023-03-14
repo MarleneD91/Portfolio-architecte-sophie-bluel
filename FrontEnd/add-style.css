@@ -331,7 +331,7 @@
     text-align: center;
     color: #444444;
 }
-#incorrect-image-size {
+.incorrect {
     color: #8e0d09;
     font-family: 'Work Sans';
     font-weight: 500;

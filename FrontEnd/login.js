@@ -70,8 +70,8 @@ async function submitLogin(event) {
         // body elemnts
         const email = document.querySelector("#email").value;
         const password = document.querySelector("#password").value;
-        alert(email);
-        alert(password);
+        //alert(email);
+        //alert(password);
         // define fetch post config object
         const postMethod = {
             method: "POST",
@@ -84,7 +84,7 @@ async function submitLogin(event) {
         // Fetch post
         const postInputs = await fetch("http://localhost:5678/api/users/login", postMethod);
         const fetchPostData = await postInputs.json();
-        alert(postInputs.status);
+        //alert(postInputs.status);
         console.log(fetchPostData);
         console.log(postInputs);
         if (postInputs.status == 200){

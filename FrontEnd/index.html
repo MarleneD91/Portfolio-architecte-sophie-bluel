@@ -133,7 +133,7 @@
 									<input type="file" accept="image/jpeg, image/png" id="file-input" name="file-input" required>
 									<label for="file-input" id="file-input-label">+ Ajouter photo</label>
 									<p id="file-restrictions">jpg, png : 4mo max</p>
-									<p id="incorrect-image-size"></p>
+									<p id="incorrect-image-size" class="incorrect"></p>
 								</div>
 								<div id="preview" style="display: none;">
 									<!-- Miniature of the added pic-->
@@ -144,13 +144,15 @@
 							<input type="text" id="new-project-title" name="new-project-title" required></br>
 							<label for="new-project-category">Catégorie</label></br>
 							<select name="new-project-category" id="new-project-category">
-								<option value="null">Choisissez une catégorie</option>
+								<option value="0" selected>Choisissez une catégorie</option>
 								<option value="1">Objets</option>
 								<option value="2">Appartements</option>
 								<option value="3">Hotels & restaurants</option>
 							</select>
 						</div>
-						<button type="submit" id="submit-new-project">Valider</button>
+							<input type="submit" id="submit-new-project" value="Valider"/>
+							<p class="incorrect" id="incorrect-form-fields"></p>
+						<!--<button type="submit" id="submit-new-project">Valider</button> -->
 					</form>
 				</div>
 			</div>
