@@ -188,7 +188,7 @@
     align-self: self-end;
     margin: 15px 15px 0 0;
 }
-.js-modal-close > p {
+#close-txt {
     display: none;
 }
 #modal-container {
@@ -203,7 +203,7 @@
     align-items: center;
     width: 90%;
 }
-.modal-title {
+#modal-gallery-title, #modal-add-title {
     font-family: 'Work Sans';
     font-style: normal;
     font-weight: 400;

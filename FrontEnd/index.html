@@ -15,11 +15,11 @@
 
 <body>
 <!-- ADMIN BAR , HIDDEN IF NOT CONNECTED -->
-<section id="admin-bar" style="display:none">
+<div id="admin-bar" style="display:none">
 	<i class="fa-regular fa-pen-to-square admin-edition"></i>
 	<p class="admin-edition edition-txt">Mode édition</p>
 	<button id="admin-edition-button">publier les changements</button>
-</section>	
+</div>	
 <!-- ################################### -->
 <div id="body">
 	
@@ -27,8 +27,8 @@
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
 		<ul>
-			<li id="projets">projets</li>
-			<li id="contact">contact</li>
+			<li id="projects-nav">projets</li>
+			<li id="contact-nav">contact</li>
 			<li id="login">login</li>
 			<li id="logout" style="display:none">logout</li> <!-- Logout added -->
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
@@ -54,7 +54,7 @@
 <!-- #################LOGIN END################## -->
 
 <main>
-	<section id="introduction">
+	<div id="introduction">
 		<figure id="architect-picture">
 			<img src="./assets/images/sophie-bluel.png" alt="">
 			<!-- ################ Edit option / Archi. Pic. ################# -->
@@ -70,7 +70,7 @@
 			<p>Chaque projet sera étudié en commun, de façon à mettre en valeur les volumes, les matières et les couleurs dans le respect de l’esprit des lieux et le choix adapté des matériaux. Le suivi du chantier sera assuré dans le souci du détail, le respect du planning et du budget.</p>
 			<p>En cas de besoin, une équipe pluridisciplinaire peut-être constituée : architecte DPLG, décorateur(trice)</p>
 		</article>
-	</section>
+	</div>
 	<section id="portfolio">
 		<!--Div to shape projects header-->
 		<div id="my-projects-headers">
@@ -109,13 +109,13 @@
 	</nav>
 </footer>
 <!-- ###################### MODAL ###################### -->
-	<aside id="edit-modal" class="modal" style="display:none" aria-hidden="true" role="dialog" aria-labelledby="edit-title">
+	<aside id="edit-modal" class="modal" style="display:none" aria-hidden="true" role="presentation" aria-labelledby="modal-gallery-title">
 		<div class="modal-wrapper js-modal-stop">
-			<i class="fa-solid fa-xmark js-modal-close"><p>Fermer la modale</p></i>
+			<p><i class="fa-solid fa-xmark js-modal-close"></i><span id="close-txt">Fermer la modale</span></p>
 			<div id="modal-container">
 				<!-- Home edit -->
-				<div id="home-edit-modal" style="display: null;" class="inner-modal">
-					<h3 class="modal-title">Galerie photo</h3>
+				<div id="home-edit-modal" style="display: none;" class="inner-modal">
+					<h3 id="modal-gallery-title">Galerie photo</h3>
 					<div id="cards-container">
 					<!-- script : projects cards-->
 					</div>
@@ -124,11 +124,11 @@
 				</div>
 				<!-- For 'add pictures'  -->
 				<div id="add-modal" style="display: none;" class="inner-modal">
-					<h3 class="modal-title">Ajout photo</h3>
+					<h3 id="modal-add-title">Ajout photo</h3>
 					<form id="new-project-form">
 						<div id="new-project-info">
 							<div id="add-picture-container">
-								<div id="before-adding-pic" style="display: null;">
+								<div id="before-adding-pic" style="display: none;">
 									<i class="fa-regular fa-file-image img-icon"></i>
 									<input type="file" accept="image/jpeg, image/png" id="file-input" name="file-input" required>
 									<label for="file-input" id="file-input-label">+ Ajouter photo</label>
@@ -140,9 +140,9 @@
 								</div>
 
 							</div>
-							<label for="new-project-title">Titre</label></br>
-							<input type="text" id="new-project-title" name="new-project-title" required></br>
-							<label for="new-project-category">Catégorie</label></br>
+							<label for="new-project-title">Titre</label><br>
+							<input type="text" id="new-project-title" name="new-project-title" required><br>
+							<label for="new-project-category">Catégorie</label><br>
 							<select name="new-project-category" id="new-project-category">
 								<option value="0" selected>Choisissez une catégorie</option>
 								<option value="1">Objets</option>
@@ -150,23 +150,24 @@
 								<option value="3">Hotels & restaurants</option>
 							</select>
 						</div>
-							<input type="submit" id="submit-new-project" value="Valider"/>
-							<p class="incorrect" id="incorrect-form-fields"></p>
+							<input type="submit" id="submit-new-project" value="Valider">
+							<p id="incorrect-form-fields" class="incorrect"></p>
 						<!--<button type="submit" id="submit-new-project">Valider</button> -->
 					</form>
 				</div>
 			</div>
 		</div>
 	</aside>		
-
 	<!-- ###################### END MODAL ###################### -->
 
 </div>
 
-</body>
+<!-- ############################## SCRIPTS ############################## -->
 <script src="gallery_and_filters.js" defer></script> <!-- Add the gallery changes w/ JS -->
 <script src="login.js" defer></script> <!-- Add the login page w/ JS -->
 <script src="https://kit.fontawesome.com/a2f3f1d3fb.js" crossorigin="anonymous"></script> <!--retrieve admin bar icon-->
 <script src="modal.js" defer></script> <!-- modal, once connected-->
- 
+
+</body>
+
 </html>
