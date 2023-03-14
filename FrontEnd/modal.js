@@ -34,6 +34,8 @@ const deleteGallery = document.getElementById("delete-modal-link");
     const submitNewProject = document.getElementById("submit-new-project");
     // new FormData for inputs values (before posting)
     const newProjectData = new FormData;
+    
+    
 
 // ############################################################################################################
 /* ########################################### EDIT MODAL : HOME ########################################### */
@@ -256,21 +258,15 @@ const changeInputsActions = function(e){
     e.preventDefault();
     newCategoryValue = newProjectCategory.value;
     newTitleValue = newProjectTitle.value;
-    //console.log(newCategoryValue);
-    //console.log(newTitleValue);
     if ( newProjectFileInput.value !== "" && newProjectFileInput.files[0].size <= maxImageSize 
         && newTitleValue !== "" && newCategoryValue !== categoryZero ) {
         console.log(newCategoryValue);
         console.log(newTitleValue);
         submitNewProject.style.backgroundColor = "#1D6154";
-        //const fileName = newProjectFileInput.files[0].name;
-        //const fileType = newProjectFileInput.files[0].type;
-        //const bodyImagePart = "@" + fileName + ";type=" + fileType;
+        newProjectData.append("image", newProjectFileInput.files[0]);
         newProjectData.append("title", newTitleValue);
-        newProjectData.append("imageUrl", newProjectFileInput.files[0]);
-        //projectData.append("", "\\");
-        //projectData.append("", "\\");
-        newProjectData.append("categoryId", newCategoryValue);
+        newProjectData.append("category", newCategoryValue);
+
     } else if ( newProjectFileInput.value == "" || newTitleValue == "" || newCategoryValue == categoryZero ){
         submitNewProject.style.backgroundColor = "#A7A7A7"
     };    
@@ -280,20 +276,9 @@ newProjectTitle.addEventListener("change", changeInputsActions);
 newProjectCategory.addEventListener("change", changeInputsActions);
 newProjectFileInput.addEventListener("change", changeInputsActions);
 console.log (newProjectData);
-/* RESTE :
-
-
-Il faut s'occuper de l'erreur JSON parse de la promesse pour la suppresion d'un élément (même si ce dernier est bien supprimé)
-Question: pourquoi l'id augmente et n'est pas remplacé ? Avec delete, l'emplacement n'est pas vidé... Comment régler ce problème ?
-Après ajout ou suppression d'un projet, la gallery (celle crée dans le script consacré) doit pouvoir se rafraichir automatiquement
 
 // Submit new project
-
-
-
-
-        /*async*/
-        
+     
 const clickAndSubmit = function(e){
             e.preventDefault();
             e.stopPropagation();
@@ -302,28 +287,30 @@ const clickAndSubmit = function(e){
                 missingFields.innerText = "Veuillez remplir tous les champs du fomulaire.";
                 return;
             } else {
-            console.log(newProjectData); 
+            console.log(newProjectData);
+            
             console.log(newProjectFileInput.files[0])
            async function fetchAdd(){
                console.log(newProjectData);
                 const addRequest = await fetch ("http://localhost:5678/api/works", {
                     method : "POST",
                     headers : { 
-                        "accept" :"application/json",
-                        "Authorization" : "Bearer " + token,
-                        "Content-Type" : "multipart/form-data"
+                        Authorization : "Bearer " + token,
                     },
                     body : newProjectData
                 }); 
-                const addResponse = await addRequest.json();
-                console.log(addResponse.status);
-                if (addResponse.status == 200){
+                
+                console.log(addRequest.status);
+                if (addRequest.status == 201){
                     alert("Le projet a bien été ajouté.");
-                } else if (addResponse.status == 400) {
+                    //newProjectData = "";
+                    //addForm.reset();
+
+                } else if (addRequest.status == 400) {
                     alert ("La requête n'a pas pu aboutir. Vérifier votre code.");
-                } else if (addResponse.status == 401) {
+                } else if (addRequest.status == 401) {
                     alert ("Vous n'êtes pas autorisé à effectuer cette action.");
-                } else if (addResponse.status == 500) {
+                } else if (addRequest.status == 500) {
                     alert("Un comportement innatendu est survenu au niveau du serveur.");
                 }  
             }
@@ -334,3 +321,6 @@ const clickAndSubmit = function(e){
 
         
         submitNewProject.addEventListener("click", clickAndSubmit);
+
+        
+//Question: pourquoi l'id augmente et n'est pas remplacé ? Avec delete, l'emplacement n'est pas vidé... Comment régler ce problème ?
