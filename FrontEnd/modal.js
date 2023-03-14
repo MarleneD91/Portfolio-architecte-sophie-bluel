@@ -33,7 +33,7 @@ const deleteGallery = document.getElementById("delete-modal-link");
     // Submmit button
     const submitNewProject = document.getElementById("submit-new-project");
     // new FormData for inputs values (before posting)
-    const projectData = new FormData();
+    const projectData = new FormData;
 
 // ############################################################################################################
 /* ########################################### EDIT MODAL : HOME ########################################### */
@@ -129,7 +129,6 @@ fetchData().then(function(projects) {
         imgCaption.innerText = "éditer";
         card.appendChild(imgCaption);
         cardsContainer.appendChild(card);
-
     };
 });
 
@@ -144,6 +143,7 @@ console.log(token);
 const deleteProject = function (e) {
     e.preventDefault();
     console.log(e.target)
+    console.log(e.target.parentElement);
 //// Voir avec if e.target = deleteGallery
     if (e.target == deleteGallery){
         console.log(deleteGallery);
@@ -165,18 +165,19 @@ const deleteProject = function (e) {
                         "Authorization":"Bearer " + token,
                     }
                 }); 
-                const deleteResponse = await deleteRequest.json();
-                console.log(deleteResponse);
-
-                if (deleteResponse.status == 200){
+                console.log(deleteRequest.status);
+                if (deleteRequest.status >= 200 && deleteRequest.status < 205){
                     alert("Le projet a bien été supprimé.");
-                } else if (deleteResponse.status == 401) {
+                    const parentNode = document.getElementById("cards-container");
+                    parentNode.removeChild(e.target.parentElement);
+                } else if (deleteRequest.status == 401) {
                     alert ("Vous n'êtes pas autorisé à effectuer cette action.");
-                } else if (deleteResponse.status == 500) {
+                } else if (deleteRequest.status == 500) {
                     alert("Un comportement innatendu est survenu.");
                 }  
             }
             fetchDelete();
+
         };
     };
 };
@@ -255,13 +256,14 @@ const changeInputsActions = function(e){
         console.log(newCategoryValue);
         console.log(newTitleValue);
         submitNewProject.style.backgroundColor = "#1D6154";
-        const fileName = newProjectFileInput.files[0].name;
-        const fileType = newProjectFileInput.files[0].type;
-        var bodyImagePart = "@" + fileName + ";type=" + fileType;
-        console.log(bodyImagePart);
-        projectData.append("image", bodyImagePart);
+        //const fileName = newProjectFileInput.files[0].name;
+        //const fileType = newProjectFileInput.files[0].type;
+        //const bodyImagePart = "@" + fileName + ";type=" + fileType;
         projectData.append("title", newTitleValue);
-        projectData.append("category", newCategoryValue);
+        projectData.append("imageUrl", newProjectFileInput.files[0]);
+        //projectData.append("", "\\");
+        //projectData.append("", "\\");
+        projectData.append("categoryId", newCategoryValue);
     } else if ( newProjectFileInput.value == "" || newTitleValue == "" || newCategoryValue == categoryZero ){
         submitNewProject.style.backgroundColor = "#A7A7A7"
     };    
@@ -294,20 +296,20 @@ const clickAndSubmit = function(e){
                 return;
             } else {
             console.log(projectData); 
-
+            console.log(newProjectFileInput.files[0])
            async function fetchAdd(){
-               
+               console.log(projectData);
                 const addRequest = await fetch ("http://localhost:5678/api/works", {
                     method : "POST",
                     headers : { 
-                        "accept":"application/json",
-                        "Authorization": "Bearer " + token,
-                        "Content-Type": "multipart/form-data"
+                        "accept" :"application/json",
+                        "Authorization" : "Bearer " + token,
+                        "Content-Type" : "multipart/form-data"
                     },
-                    body : projectData,
+                    body : projectData
                 }); 
                 const addResponse = await addRequest.json();
-                console.log(addResponse);
+                console.log(addResponse.status);
                 if (addResponse.status == 200){
                     alert("Le projet a bien été ajouté.");
                 } else if (addResponse.status == 400) {
