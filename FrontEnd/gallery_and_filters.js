@@ -59,23 +59,27 @@ fetchData()
     });
     
     /* function to create the projects cards */
-    function displayProjects(array){
-        for (let i=0; i<array.length; i++){
-            const projectData = array[i]; // using the i element (object) of the array
-            console.log(projectData)
-            /* figure element */
+    function createIndexCards(data){
+            /* figure element */            
             const projectFigure = document.createElement("figure"); // the figure tag
-            projectFigure.setAttribute("id", projectData.title)
+            projectFigure.setAttribute("id", data.title)
             //const projectClassTxt = "project" + " " + projectData.category.name;
             gallery.appendChild(projectFigure); // adding figure tag to the gallery div
             /* img element */
             const projectImg = document.createElement("img"); // creating the img tag
-            projectImg.src = projectData.imageUrl; // adding the url to the src attribute for each img tag
+            projectImg.src = data.imageUrl; // adding the url to the src attribute for each img tag
             projectFigure.appendChild(projectImg); // append img tag inside the figure tag
             /* figcaption element */
             const projectCaption = document.createElement("figcaption"); // creating the fig caption
-            projectCaption.innerText = projectData.title; // adding text = title of the i object, into the figcaption tag
+            projectCaption.innerText = data.title; // adding text = title of the i object, into the figcaption tag
             projectFigure.appendChild(projectCaption); // append figcaption inside figure tag*/
+    }
+    //Using the data fetched
+    function displayProjects(array){
+        for (let i=0; i<array.length; i++){
+            const projectData = array[i]; // using the i element (object) of the array
+            console.log(projectData);
+            createIndexCards(projectData);
         };
     };
     

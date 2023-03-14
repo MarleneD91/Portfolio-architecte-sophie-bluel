@@ -99,6 +99,30 @@ window.addEventListener("keydown",function (e){
 });
 
 /* Load the gallery in the modal */
+
+//function for creating cards and adding them to the card container
+function createModalCards(data){
+        const cardsContainer = document.getElementById("cards-container");
+        const card = document.createElement("figure");
+        card.setAttribute("class", "project-card");
+        const projectImgUrl = data.imageUrl;
+        const projectImg = document.createElement("img");
+        projectImg.setAttribute("src", projectImgUrl);
+        projectImg.setAttribute("alt", data.title);
+        projectImg.setAttribute("class","project-img")
+        card.appendChild(projectImg);
+        const trashIcon = document.createElement("i");
+        trashIcon.setAttribute("class", "fa-solid fa-trash-can delete-icon");
+        trashIcon.setAttribute("id", data.id);
+        trashIcon.addEventListener("click", deleteProject)
+        card.appendChild(trashIcon);
+        const imgCaption = document.createElement("figcaption");
+        imgCaption.setAttribute("class","figcaption");
+        imgCaption.innerText = "éditer";
+        card.appendChild(imgCaption);
+        cardsContainer.appendChild(card);
+}
+
 async function fetchData () {
     const fetchProjects = await fetch ("http://localhost:5678/api/works");
     const projects = await fetchProjects.json();
@@ -112,25 +136,7 @@ async function fetchData () {
 fetchData().then(function(projects) {
     for (let i = 0; i<projects.length; i++){
         const projectInfo = projects[i];
-        const cardsContainer = document.getElementById("cards-container");
-        const card = document.createElement("figure");
-        card.setAttribute("class", "project-card");
-        const projectImgUrl = projectInfo.imageUrl;
-        const projectImg = document.createElement("img");
-        projectImg.setAttribute("src", projectImgUrl);
-        projectImg.setAttribute("alt", projectInfo.title);
-        projectImg.setAttribute("class","project-img")
-        card.appendChild(projectImg);
-        const trashIcon = document.createElement("i");
-        trashIcon.setAttribute("class", "fa-solid fa-trash-can delete-icon");
-        trashIcon.setAttribute("id", projectInfo.id);
-        trashIcon.addEventListener("click", deleteProject)
-        card.appendChild(trashIcon);
-        const imgCaption = document.createElement("figcaption");
-        imgCaption.setAttribute("class","figcaption");
-        imgCaption.innerText = "éditer";
-        card.appendChild(imgCaption);
-        cardsContainer.appendChild(card);
+        createModalCards(projectInfo);        
     };
 });
 
@@ -215,6 +221,7 @@ const switchToAdd = function displayAddForm(e){
         homeEditModal.style.display = null;   
         addEditModal.style.display = "none";
         arrow.remove();
+        // clear image upload bloc
         beforeAddingImage.style.display = null;
         imagePreviewDiv.style.display = "none";
         // cLear the form
@@ -277,8 +284,21 @@ newProjectCategory.addEventListener("change", changeInputsActions);
 newProjectFileInput.addEventListener("change", changeInputsActions);
 console.log (newProjectData);
 
-// Submit new project
-     
+// Create index card - same as in the gallery_and_filters.js
+function createIndexCards(data){            
+    const projectFigure = document.createElement("figure"); 
+    projectFigure.setAttribute("id", data.title);
+    gallery.appendChild(projectFigure);
+    const projectImg = document.createElement("img"); 
+    projectImg.src = data.imageUrl;
+    projectFigure.appendChild(projectImg); 
+    const projectCaption = document.createElement("figcaption");
+    projectCaption.innerText = data.title;
+    projectFigure.appendChild(projectCaption);
+};
+
+/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! SUBMIT A NEW PROJECT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+
 const clickAndSubmit = function(e){
             e.preventDefault();
             e.stopPropagation();
@@ -299,12 +319,26 @@ const clickAndSubmit = function(e){
                     },
                     body : newProjectData
                 }); 
+                const addResponse = await addRequest.json();
+                console.log(addResponse);
                 
                 console.log(addRequest.status);
                 if (addRequest.status == 201){
                     alert("Le projet a bien été ajouté.");
-                    //newProjectData = "";
-                    //addForm.reset();
+                    //reset FormData
+                    newProjectData.forEach(function(key){
+                        newProjectData.delete(key)
+                        });
+                    //reset html form
+                        // clear image upload bloc
+                        beforeAddingImage.style.display = null;
+                        imagePreviewDiv.style.display = "none";
+                        // cLear the form
+                        addForm.reset();    
+                    // Create a new element for the modal gallery
+                    createModalCards(addResponse);
+                    // Create a new element for the index gallery
+                    createIndexCards(addResponse);
 
                 } else if (addRequest.status == 400) {
                     alert ("La requête n'a pas pu aboutir. Vérifier votre code.");
