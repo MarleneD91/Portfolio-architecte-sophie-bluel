@@ -62,9 +62,11 @@ fetchData()
     function displayProjects(array){
         for (let i=0; i<array.length; i++){
             const projectData = array[i]; // using the i element (object) of the array
+            console.log(projectData)
             /* figure element */
             const projectFigure = document.createElement("figure"); // the figure tag
-            const projectClassTxt = "project" + " " + projectData.category.name;
+            projectFigure.setAttribute("id", projectData.title)
+            //const projectClassTxt = "project" + " " + projectData.category.name;
             gallery.appendChild(projectFigure); // adding figure tag to the gallery div
             /* img element */
             const projectImg = document.createElement("img"); // creating the img tag
@@ -76,7 +78,7 @@ fetchData()
             projectFigure.appendChild(projectCaption); // append figcaption inside figure tag*/
         };
     };
-
+    
     displayProjects(projects); // To display all the projects when the page load
 
     let buttonId = null;  

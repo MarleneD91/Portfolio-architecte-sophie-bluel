@@ -227,7 +227,7 @@
 #cards-container {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     width: 90%;
     flex-wrap:wrap;
     border-bottom: 1px solid #b3b3b3;
@@ -235,7 +235,8 @@
 }
 .project-card {
     width: 17%; 
-    position:relative;  
+    position:relative;
+    margin: 1.5%;  
 }
 .project-img {
     object-fit: fill;

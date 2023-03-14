@@ -7,7 +7,7 @@ const modalContainer = document.getElementById("modal-container");
 const modalWrapper = document.querySelector(".modal-wrapper");
 const homeEditModal = document.querySelector("#home-edit-modal");
 const addEditModal = document.querySelector("#add-modal");
-let arrow = null;
+let arrow = "";
 let modal = null;
 const deleteGallery = document.getElementById("delete-modal-link");
 
@@ -33,7 +33,7 @@ const deleteGallery = document.getElementById("delete-modal-link");
     // Submmit button
     const submitNewProject = document.getElementById("submit-new-project");
     // new FormData for inputs values (before posting)
-    const projectData = new FormData;
+    const newProjectData = new FormData;
 
 // ############################################################################################################
 /* ########################################### EDIT MODAL : HOME ########################################### */
@@ -168,8 +168,15 @@ const deleteProject = function (e) {
                 console.log(deleteRequest.status);
                 if (deleteRequest.status >= 200 && deleteRequest.status < 205){
                     alert("Le projet a bien été supprimé.");
-                    const parentNode = document.getElementById("cards-container");
-                    parentNode.removeChild(e.target.parentElement);
+                        // Then, delete the project from the modal gallery
+                        const parentNode = document.getElementById("cards-container");
+                        parentNode.removeChild(e.target.parentElement);
+                        // And from the index gallery
+                        const modalFigure = e.target.parentElement;
+                        const modalFigureImgAlt = modalFigure.firstElementChild.getAttribute("alt");
+                        const cardToRemove = document.getElementById(modalFigureImgAlt)
+                        console.log(cardToRemove);
+                        gallery.removeChild(cardToRemove);                        
                 } else if (deleteRequest.status == 401) {
                     alert ("Vous n'êtes pas autorisé à effectuer cette action.");
                 } else if (deleteRequest.status == 500) {
@@ -259,20 +266,20 @@ const changeInputsActions = function(e){
         //const fileName = newProjectFileInput.files[0].name;
         //const fileType = newProjectFileInput.files[0].type;
         //const bodyImagePart = "@" + fileName + ";type=" + fileType;
-        projectData.append("title", newTitleValue);
-        projectData.append("imageUrl", newProjectFileInput.files[0]);
+        newProjectData.append("title", newTitleValue);
+        newProjectData.append("imageUrl", newProjectFileInput.files[0]);
         //projectData.append("", "\\");
         //projectData.append("", "\\");
-        projectData.append("categoryId", newCategoryValue);
+        newProjectData.append("categoryId", newCategoryValue);
     } else if ( newProjectFileInput.value == "" || newTitleValue == "" || newCategoryValue == categoryZero ){
         submitNewProject.style.backgroundColor = "#A7A7A7"
     };    
-    console.log (projectData);
+    console.log (newProjectData);
 };
 newProjectTitle.addEventListener("change", changeInputsActions);
 newProjectCategory.addEventListener("change", changeInputsActions);
 newProjectFileInput.addEventListener("change", changeInputsActions);
-console.log (projectData);
+console.log (newProjectData);
 /* RESTE :
 
 
@@ -295,10 +302,10 @@ const clickAndSubmit = function(e){
                 missingFields.innerText = "Veuillez remplir tous les champs du fomulaire.";
                 return;
             } else {
-            console.log(projectData); 
+            console.log(newProjectData); 
             console.log(newProjectFileInput.files[0])
            async function fetchAdd(){
-               console.log(projectData);
+               console.log(newProjectData);
                 const addRequest = await fetch ("http://localhost:5678/api/works", {
                     method : "POST",
                     headers : { 
@@ -306,7 +313,7 @@ const clickAndSubmit = function(e){
                         "Authorization" : "Bearer " + token,
                         "Content-Type" : "multipart/form-data"
                     },
-                    body : projectData
+                    body : newProjectData
                 }); 
                 const addResponse = await addRequest.json();
                 console.log(addResponse.status);
