@@ -70,9 +70,9 @@ const submitLogin = async function(event) {
         // body elements
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
-        //alert(email);
         console.log(email);
         console.log(password);
+        console.log(document.getElementById("password"))
         // define fetch post config object
         const postMethod = {
             method: "POST",
