@@ -77,8 +77,13 @@ const closeModal = function (e) {
     beforeAddingImage.style.display = null;
     imagePreviewDiv.style.display = "none";
 
-    // cLear the project inputs
+    // cLear the form + grey button
     addForm.reset();
+    submitNewProject.style.backgroundColor = "#A7A7A7";
+    // clear Formdata
+    newProjectData.delete("image");
+    newProjectData.delete("category");
+    newProjectData.delete("title");
 
 }
 
@@ -175,7 +180,12 @@ const deleteProject = function (e) {
                 }); 
                 console.log(deleteRequest.status);
                 if (deleteRequest.status >= 200 && deleteRequest.status < 205){
-                    alert("Le projet a bien été supprimé.");
+                    // alert the user that the target have been deleted
+                    if (e.target == deleteGallery) {
+                        alert("La galerie a été supprimée.")
+                    } else if (e.target != deleteGallery) {
+                        alert("Le projet a bien été supprimé.");
+                    }                    
                         // Then, delete the project from the modal gallery
                         const parentNode = document.getElementById("cards-container");
                         parentNode.removeChild(e.target.parentElement);
@@ -224,8 +234,13 @@ const switchToAdd = function displayAddForm(e){
         // clear image upload bloc
         beforeAddingImage.style.display = null;
         imagePreviewDiv.style.display = "none";
-        // cLear the form
+        // cLear the form + grey button
         addForm.reset();
+        submitNewProject.style.backgroundColor = "#A7A7A7";
+        // clear Formdata
+        newProjectData.delete("image");
+        newProjectData.delete("category");
+        newProjectData.delete("title");
 
     };
     arrow.addEventListener("click", backToHomeModal);
@@ -314,9 +329,7 @@ const clickAndSubmit = function(e){
                console.log(newProjectData);
                 const addRequest = await fetch ("http://localhost:5678/api/works", {
                     method : "POST",
-                    headers : { 
-                        Authorization : "Bearer " + token,
-                    },
+                    headers : { Authorization : "Bearer " + token },
                     body : newProjectData
                 }); 
                 const addResponse = await addRequest.json();
@@ -326,15 +339,17 @@ const clickAndSubmit = function(e){
                 if (addRequest.status == 201){
                     alert("Le projet a bien été ajouté.");
                     //reset FormData
-                    newProjectData.forEach(function(key){
-                        newProjectData.delete(key)
-                        });
+                    newProjectData.delete("image");
+                    newProjectData.delete("category");
+                    newProjectData.delete("title");
+                    console.log(newProjectData);
                     //reset html form
                         // clear image upload bloc
                         beforeAddingImage.style.display = null;
                         imagePreviewDiv.style.display = "none";
-                        // cLear the form
-                        addForm.reset();    
+                        // cLear the form + grey button
+                        addForm.reset();
+                        submitNewProject.style.backgroundColor = "#A7A7A7";
                     // Create a new element for the modal gallery
                     createModalCards(addResponse);
                     // Create a new element for the index gallery

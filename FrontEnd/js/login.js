@@ -114,7 +114,7 @@ if (token){ //visual changes
     
     /* hide filters section */
     const filters = document.querySelector(".filters");
-    filters.style.display = "none";
+    filters.style.display= "none";
 
     /*"login" to "logout"*/
     const login = document.querySelector("#login");
@@ -125,6 +125,10 @@ if (token){ //visual changes
     /* Architecte picture - add the caption - "change" */
     const editArchiPic = document.querySelector("#edit-archi-pic");
     editArchiPic.style.display = null;
+
+    /* Architecte picture - add the caption - "change" */
+    const editIntroTxt = document.querySelector("#edit-intro-txt");
+    editIntroTxt.style.display = null;
 
     /* Project - add "change" */
     const editProjects = document.querySelector(".js-modal");

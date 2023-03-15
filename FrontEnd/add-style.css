@@ -29,7 +29,9 @@
     background-color: #1D6154;
     color: white;
 }
-
+.gallery {
+    margin-top: 30px;
+}
 /* SHAPPING THE LOG IN SECTION */
 /* login link */
 #login-link {
@@ -126,14 +128,18 @@
 }
 
 /* ----- EDIT LINKS ----- */
-/*Archi Pic edit*/
- #edit-archi-pic{
+/*Archi Pic edit + Intro txt edit */
+ #edit-archi-pic, #edit-intro-txt{
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     width: 80%;
     margin:auto;
     margin-top: 10px;
+}
+#edit-intro-txt {
+    margin-bottom: 15px;
+    margin-left: 0;
 }
 /* My projects edit*/
 #my-projects-headers {
@@ -187,6 +193,7 @@
     position: relative;
     align-self: self-end;
     margin: 15px 15px 0 0;
+    font-size: 25px;
 }
 #close-txt {
     display: none;
