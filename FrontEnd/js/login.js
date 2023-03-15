@@ -19,7 +19,7 @@ const loginClick = function clickOnLogin(event) {
     loginSection.appendChild(loginTitle);
 
     // Form
-    const form = document.createElement("form");
+    var form = document.createElement("form");
     form.setAttribute("id","login-form");
     form.setAttribute("method","post");
     loginSection.appendChild(form);
@@ -44,7 +44,7 @@ const loginClick = function clickOnLogin(event) {
         passwordInput.setAttribute("required","");
         form.appendChild(passwordInput);
         //submit
-        var submit = document.createElement("input");
+        const submit = document.createElement("input");
         submit.setAttribute("type","submit");
         submit.setAttribute("id","submit-button");
         submit.setAttribute("value","Se connecter");
@@ -65,13 +65,14 @@ navLogin.addEventListener("click", loginClick);
 // 3- POST THE ID/PSWD, ALERT IF SUCCESS OR NOT
 
 // submit id + pwd function
-async function submitLogin(event) {
+const submitLogin = async function(event) {
         event.preventDefault();
-        // body elemnts
-        const email = document.querySelector("#email").value;
-        const password = document.querySelector("#password").value;
+        // body elements
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
         //alert(email);
-        //alert(password);
+        console.log(email);
+        console.log(password);
         // define fetch post config object
         const postMethod = {
             method: "POST",
@@ -92,15 +93,15 @@ async function submitLogin(event) {
             window.localStorage.setItem("token", fetchPostData.token);
             window.location.replace("");
         } else if (postInputs.status == 401) {
-                alert ("Mot de passe invalide");
+                alert ("Mot de passe erroné");
         } else if (postInputs.status == 404) {
-                alert("Mot de passe et/ou identifiant invalide(s)")
-        }   
+                alert("Erreur dans l’identifiant ou le mot de passe")
+        };  
     };        
-     
+
     
    /* ------------------------- CHANGES IN HOME PAGE IF USER IS CONNECTED ------------------------- */
-const token = window.localStorage.getItem("token");
+var token = window.localStorage.getItem("token");
 if (token){ //visual changes
 
     /* edition bar */
