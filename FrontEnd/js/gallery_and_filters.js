@@ -84,7 +84,6 @@ fetchData()
     function displayProjects(array){
         for (let i=0; i<array.length; i++){
             const projectData = array[i]; // using the i element (object) of the array
-            console.log(projectData);
             createIndexCards(projectData);
         };
     };
@@ -95,16 +94,15 @@ fetchData()
     const filterOnClick = function(e) {
         e.preventDefault();
         buttonId = e.target.getAttribute("id");
-        console.log(buttonId);
         gallery.innerHTML="";
+
         if (buttonId == "all"){ // For the "Tous" button, display all the projects
             displayProjects(projects);
         } else { // For the others button, the projects displayed match the buttons categories
-                const filteredProjects = projects.filter(function(project){
-                    return project.category.name == buttonId;
-                });
-                console.log(filteredProjects);
-                displayProjects(filteredProjects);
+            const filteredProjects = projects.filter(function(project){
+                return project.category.name == buttonId;
+            });
+            displayProjects(filteredProjects);
         };
     };
 
