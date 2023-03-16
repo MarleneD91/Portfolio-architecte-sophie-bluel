@@ -32,7 +32,7 @@ filtersDiv.appendChild(allCategoriesButton);
 async function fetchData () {
     const fetchProjects = await fetch ("http://localhost:5678/api/works");
     const projects = await fetchProjects.json();
-    console.log(projects);
+    
     if (fetchProjects.ok) {
         return projects;
     } else {
@@ -51,8 +51,6 @@ fetchData()
         categoriesArray.add(projectInfo.category.name);       
         allProjects.push(projectInfo);
     };
-    //console.log(allProjects); -- check if the datas are retrieved
-    //console.log(categoriesArray); -- same
 
     /* Creating the filters buttons */
     categoriesArray.forEach(function createButton(category){
