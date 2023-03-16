@@ -161,7 +161,6 @@ const deleteProject = function (e) {
     e.preventDefault();
 
     if (e.target == deleteGallery){
-        console.log(deleteGallery);
         const confirmDial1 = confirm("Êtes vous certain de vouloir supprimer tous les projets ?")
         if (confirmDial1) { alert("Le chemin d'accès doit être spécifié!") };
     } else if (e.target != deleteGallery) {
