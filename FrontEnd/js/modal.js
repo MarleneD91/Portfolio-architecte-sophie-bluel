@@ -1,4 +1,4 @@
-/* -x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x- MODALS -x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x- */
+/* ############################################### MODALS ############################################### */
 
 // Variables - Global range
 
@@ -7,9 +7,10 @@ const modalContainer = document.getElementById("modal-container");
 const modalWrapper = document.querySelector(".modal-wrapper");
 const homeEditModal = document.querySelector("#home-edit-modal");
 const addEditModal = document.querySelector("#add-modal");
-let arrow = "";
+const arrow = document.querySelector(".arrow-back");
 let modal = null;
 const deleteGallery = document.getElementById("delete-modal-link");
+const topIcons = document.getElementById("top-icons");
 
 // "add" form elements
     //Form
@@ -32,20 +33,21 @@ const deleteGallery = document.getElementById("delete-modal-link");
     var newProjectImage = "";
     // Submmit button
     const submitNewProject = document.getElementById("submit-new-project");
+    const missingFields = document.getElementById("incorrect-form-fields");
+    missingFields.innerHTML ="";
     // new FormData for inputs values (before posting)
     const newProjectData = new FormData;
     
-    
-
-// ############################################################################################################
-/* ########################################### EDIT MODAL : HOME ########################################### */
-// ############################################################################################################
+/* -------------------------------------------------------------------------------------------------------*/
+/* --------------------------------------- EDIT MODAL : HOME -------------------------------------------- */
+/* ------------------------------------------ OPEN & CLOSE ---------------------------------------------- */
+/* -------------------------------------------------------------------------------------------------------*/
 
 //Open Modal function
 const openModal = function (e) {
     e.preventDefault();
     homeEditModal.style.display = null;   
-    addEditModal.style.display = "none"; 
+    addEditModal.style.display = "none";
 
     // open modal
     modal = document.querySelector(e.target.getAttribute('href'));
@@ -72,7 +74,8 @@ const closeModal = function (e) {
     modal.querySelector(".js-modal-close").removeEventListener("click", closeModal);
     modal.querySelector(".js-modal-stop").removeEventListener("click", stopPropagation);
     modal = null;
-    arrow.remove(); 
+    arrow.style.display="none";
+    topIcons.style.justifyContent = "end"; 
 
     beforeAddingImage.style.display = null;
     imagePreviewDiv.style.display = "none";
@@ -103,9 +106,12 @@ window.addEventListener("keydown",function (e){
     };
 });
 
-/* Load the gallery in the modal */
+/* -------------------------------------------------------------------------------------------------------*/
+/* --------------------------------------- EDIT MODAL : HOME -------------------------------------------- */
+/* ---------------------------------------- LOAD THE GALLERY -------------------------------------------- */
+/* -------------------------------------------------------------------------------------------------------*/
 
-//function for creating cards and adding them to the card container
+// function for creating cards and adding them to the card container
 function createModalCards(data){
         const cardsContainer = document.getElementById("cards-container");
         const card = document.createElement("figure");
@@ -128,10 +134,11 @@ function createModalCards(data){
         cardsContainer.appendChild(card);
 }
 
+// Retrieve projects data
 async function fetchData () {
     const fetchProjects = await fetch ("http://localhost:5678/api/works");
     const projects = await fetchProjects.json();
-    console.log(projects);
+
     if (fetchProjects.ok) {
         return projects;
     } else {
@@ -145,19 +152,15 @@ fetchData().then(function(projects) {
     };
 });
 
-// #############################################################################################################
-/* ##################################### EDIT MODAL : DELETE PROJECT(S) ##################################### */
-// #############################################################################################################
+/* -------------------------------------------------------------------------------------------------------*/
+/* --------------------------------------- EDIT MODAL : HOME -------------------------------------------- */
+/* ---------------------------------------- DELETE PROJECT(S) ------------------------------------------- */
+/* -------------------------------------------------------------------------------------------------------*/
 
-
-//const token = localStorage.getItem("token"); // retrieve token for fetch authorization
-console.log(token);
 //const authorizationKey = "Bearer " + 
 const deleteProject = function (e) {
     e.preventDefault();
-    console.log(e.target)
-    console.log(e.target.parentElement);
-//// Voir avec if e.target = deleteGallery
+
     if (e.target == deleteGallery){
         console.log(deleteGallery);
         const confirmDial1 = confirm("Êtes vous certain de vouloir supprimer tous les projets ?")
@@ -166,11 +169,8 @@ const deleteProject = function (e) {
         const confirmDial2 = confirm("Êtes vous certain de vouloir supprimer ce projet ?");
         if(confirmDial2) {
             async function fetchDelete(){
-                console.log(e.target);
                 const projectId = e.target.id;
-                console.log(projectId);
                 const deleteUrl = "http://localhost:5678/api/works/" + projectId;
-                console.log(deleteUrl);
                 const deleteRequest = await fetch (deleteUrl, {
                     method : "DELETE",
                     headers : { 
@@ -178,9 +178,9 @@ const deleteProject = function (e) {
                         "Authorization":"Bearer " + token,
                     }
                 }); 
-                console.log(deleteRequest.status);
+                
                 if (deleteRequest.status >= 200 && deleteRequest.status < 205){
-                    // alert the user that the target have been deleted
+                    // alert the user that the target(s) has/have been deleted
                     if (e.target == deleteGallery) {
                         alert("La galerie a été supprimée.")
                     } else if (e.target != deleteGallery) {
@@ -193,7 +193,6 @@ const deleteProject = function (e) {
                         const modalFigure = e.target.parentElement;
                         const modalFigureImgAlt = modalFigure.firstElementChild.getAttribute("alt");
                         const cardToRemove = document.getElementById(modalFigureImgAlt)
-                        console.log(cardToRemove);
                         gallery.removeChild(cardToRemove);                        
                 } else if (deleteRequest.status == 401) {
                     alert ("Vous n'êtes pas autorisé à effectuer cette action.");
@@ -206,31 +205,33 @@ const deleteProject = function (e) {
         };
     };
 };
-// Delete the entire gallery :
+// Delete the entire gallery : Event listener on txt
 deleteGallery.addEventListener("click", deleteProject);
 
-// ############################################################################################################
-/* #######################################  EDIT MODAL : ADD RPOJECT ####################################### */
-// ############################################################################################################
+/* -------------------------------------------------------------------------------------------------------*/
+/* --------------------------------------- EDIT MODAL : ADD --------------------------------------------- */
+/* -------------------------------------------------------------------------------------------------------*/
 
-/* First, switch to the add project form */
+/* Switch to the add project form */
 const switchToAdd = function displayAddForm(e){
     e.preventDefault();
     homeEditModal.style.display = "none";
     addEditModal.style.display = null;
-    arrow = document.createElement("i");
-    arrow.setAttribute("class","fa-solid fa-arrow-left-long arrow-back");
-    arrow.innerHTML = "<p>Revenir en arrière</p>";
-    modalWrapper.insertBefore(arrow, modalContainer);
+    topIcons.style.justifyContent = "space-between";
+    arrow.style.display= null;
     incorrectImageSize.innerHTML = "";
 
 
     /* Arrow : back to home edit modal */
     const backToHomeModal = function(e){
         e.preventDefault();
+        // change the modal
         homeEditModal.style.display = null;   
         addEditModal.style.display = "none";
-        arrow.remove();
+        // replace/hide the top icons
+        arrow.style.display="none";
+        topIcons.style.justifyContent = "end"; 
+
         // clear image upload bloc
         beforeAddingImage.style.display = null;
         imagePreviewDiv.style.display = "none";
@@ -245,16 +246,18 @@ const switchToAdd = function displayAddForm(e){
     };
     arrow.addEventListener("click", backToHomeModal);
 };
-// Add the event listener on the add button link 
+// Add the event listener on the add section button link 
 document.getElementById("add-modal-link").addEventListener("click", switchToAdd);
 
-
+/* -------------------------------------------------------------------------------------------------------*/
+/* --------------------------------------- EDIT MODAL : ADD --------------------------------------------- */
+/* ----------------------------------------- ADD A PICTURE ---------------------------------------------- */
+/* -------------------------------------------------------------------------------------------------------*/
 
 // Img preview + size
 const showImagePreview = function (e){
     e.preventDefault();
     newProjectImage = newProjectFileInput.files[0];
-    console.log(newProjectImage);
 
     //For size
     if (newProjectImage.size > maxImageSize){
@@ -275,6 +278,11 @@ const showImagePreview = function (e){
 }
 newProjectFileInput.addEventListener("change", showImagePreview);
 
+/* -------------------------------------------------------------------------------------------------------*/
+/* --------------------------------------- EDIT MODAL : ADD --------------------------------------------- */
+/* ------------------------------------------ FORM INPUTS ----------------------------------------------- */
+/* -------------------------------------------------------------------------------------------------------*/
+
 // Listen changes in inputs : if all ok, change color button and add info to formData
 const changeInputsActions = function(e){
     e.preventDefault();
@@ -282,24 +290,25 @@ const changeInputsActions = function(e){
     newTitleValue = newProjectTitle.value;
     if ( newProjectFileInput.value !== "" && newProjectFileInput.files[0].size <= maxImageSize 
         && newTitleValue !== "" && newCategoryValue !== categoryZero ) {
-        console.log(newCategoryValue);
-        console.log(newTitleValue);
+        // Manage alert p and submit button color
+        missingFields.innerHTML ="";
         submitNewProject.style.backgroundColor = "#1D6154";
+        // Fill the FormData
         newProjectData.append("image", newProjectFileInput.files[0]);
         newProjectData.append("title", newTitleValue);
         newProjectData.append("category", newCategoryValue);
-
-    } else if ( newProjectFileInput.value == "" || newTitleValue == "" || newCategoryValue == categoryZero ){
+    } else if ( newProjectFileInput.value == "" || newTitleValue == "" || 
+                newCategoryValue == categoryZero ){
         submitNewProject.style.backgroundColor = "#A7A7A7"
     };    
-    console.log (newProjectData);
 };
+// Add the change event listeners on inputs
 newProjectTitle.addEventListener("change", changeInputsActions);
 newProjectCategory.addEventListener("change", changeInputsActions);
 newProjectFileInput.addEventListener("change", changeInputsActions);
-console.log (newProjectData);
 
-// Create index card - same as in the gallery_and_filters.js
+
+// Create index.html card - same as in the gallery_and_filters.js
 function createIndexCards(data){            
     const projectFigure = document.createElement("figure"); 
     projectFigure.setAttribute("id", data.title);
@@ -312,64 +321,55 @@ function createIndexCards(data){
     projectFigure.appendChild(projectCaption);
 };
 
-/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! SUBMIT A NEW PROJECT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+/* -------------------------------------------------------------------------------------------------------*/
+/* --------------------------------------- EDIT MODAL : ADD --------------------------------------------- */
+/* ------------------------------------- SUBMIT A NEW PROJECT ------------------------------------------- */
+/* -------------------------------------------------------------------------------------------------------*/
 
 const clickAndSubmit = function(e){
-            e.preventDefault();
-            e.stopPropagation();
-            if ( newProjectFileInput.value == "" || newTitleValue == "" || newCategoryValue == categoryZero ) {
-                const missingFields = document.getElementById("incorrect-form-fields");
-                missingFields.innerText = "Veuillez remplir tous les champs du fomulaire.";
-                return;
-            } else {
-            console.log(newProjectData);
-            
-            console.log(newProjectFileInput.files[0])
-           async function fetchAdd(){
-               console.log(newProjectData);
-                const addRequest = await fetch ("http://localhost:5678/api/works", {
-                    method : "POST",
-                    headers : { Authorization : "Bearer " + token },
-                    body : newProjectData
-                }); 
-                const addResponse = await addRequest.json();
-                console.log(addResponse);
-                
-                console.log(addRequest.status);
-                if (addRequest.status == 201){
-                    alert("Le projet a bien été ajouté.");
-                    //reset FormData
-                    newProjectData.delete("image");
-                    newProjectData.delete("category");
-                    newProjectData.delete("title");
-                    console.log(newProjectData);
-                    //reset html form
-                        // clear image upload bloc
-                        beforeAddingImage.style.display = null;
-                        imagePreviewDiv.style.display = "none";
-                        // cLear the form + grey button
-                        addForm.reset();
-                        submitNewProject.style.backgroundColor = "#A7A7A7";
-                    // Create a new element for the modal gallery
-                    createModalCards(addResponse);
-                    // Create a new element for the index gallery
-                    createIndexCards(addResponse);
+    e.preventDefault();
+    e.stopPropagation();
+    if ( newProjectFileInput.value == "" || newTitleValue == "" || newCategoryValue == categoryZero ) {
+        missingFields.innerText = "Veuillez remplir tous les champs du fomulaire.";
+        return;
+    } else {
+        async function fetchAdd(){
+            const addRequest = await fetch ("http://localhost:5678/api/works", {
+                method : "POST",
+                headers : { Authorization : "Bearer " + token },
+                body : newProjectData
+            }); 
+            const addResponse = await addRequest.json();
 
-                } else if (addRequest.status == 400) {
-                    alert ("La requête n'a pas pu aboutir. Vérifier votre code.");
-                } else if (addRequest.status == 401) {
-                    alert ("Vous n'êtes pas autorisé à effectuer cette action.");
-                } else if (addRequest.status == 500) {
-                    alert("Un comportement innatendu est survenu au niveau du serveur.");
-                }  
-            }
-            fetchAdd();
-        };
-            };
+            if (addRequest.status == 201){
+                alert("Le projet a bien été ajouté.");
+                //reset FormData
+                newProjectData.delete("image");
+                newProjectData.delete("category");
+                newProjectData.delete("title");
+                //reset html form
+                    // clear image upload bloc
+                    beforeAddingImage.style.display = null;
+                    imagePreviewDiv.style.display = "none";
+                    // cLear the form + grey button
+                    addForm.reset();
+                    submitNewProject.style.backgroundColor = "#A7A7A7";
+                // Create a new element for the modal gallery
+                createModalCards(addResponse);
+                // Create a new element for the index gallery
+                createIndexCards(addResponse);
+            } else if (addRequest.status == 400) {
+                alert ("La requête n'a pas pu aboutir. Vérifier votre code.");
+            } else if (addRequest.status == 401) {
+                alert ("Vous n'êtes pas autorisé à effectuer cette action.");
+            } else if (addRequest.status == 500) {
+                alert("Un comportement innatendu est survenu au niveau du serveur.");
+            }  
+        }
+        fetchAdd();
+    };
+};
 
+submitNewProject.addEventListener("click", clickAndSubmit);
 
-        
-        submitNewProject.addEventListener("click", clickAndSubmit);
-
-        
-//Question: pourquoi l'id augmente et n'est pas remplacé ? Avec delete, l'emplacement n'est pas vidé... Comment régler ce problème ?
+/* ---------------------------------------- END OF MODALS SCRIPT ---------------------------------------- */

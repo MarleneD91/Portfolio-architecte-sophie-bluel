@@ -5,6 +5,10 @@
     box-shadow: 0 0 4px rgba(0,0,0,0.7);
 
 }
+a {
+    color: #000000;
+    text-decoration: none;
+}
 /* SHAPPING THE FILTERS */
 .filters {
     display:flex;
@@ -189,13 +193,18 @@
     align-items: center;
     border-radius: 10px;
 }
+#top-icons{
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    width: 100%;
+    align-items: center;
+}
 .js-modal-close {
-    position: relative;
-    align-self: self-end;
     margin: 15px 15px 0 0;
     font-size: 25px;
 }
-#close-txt {
+.icon-txt {
     display: none;
 }
 #modal-container {
@@ -269,13 +278,8 @@
 
 /* MODAL - ADD PROJECT */
 .arrow-back {
-    position: relative;
-    align-self: self-start;
-    margin: 15px 0 0 15px;
-    font-size: 20px;
-}
-.arrow-back > p{
-    display:none;
+    margin: 25px 0 0 15px;
+    font-size: 25px;
 }
 #new-project-form {
     width: 90%;

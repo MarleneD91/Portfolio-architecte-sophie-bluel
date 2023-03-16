@@ -1,11 +1,17 @@
-/* -------- LOGIN SECTION -------- */
+/* ############################################ LOGIN SECTION ############################################ */
 
+/*---------------------------------------------------------------------------------------------------------*/
+/*------------------------------------- 1 -HTML  (+CSS) STRUCTURE -----------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------*/
 
 const loginClick = function clickOnLogin(event) {
     event.preventDefault();
-// 1 -HTML  (+CSS) STRUCTURE
+
     var main = document.querySelector("main");
     main.innerHTML = "";
+
+    // bold 'login'
+    navLogin.style.fontWeight = "700" ;
 
     // login section 
     const loginSection = document.createElement("section");
@@ -58,13 +64,19 @@ const loginClick = function clickOnLogin(event) {
         form.appendChild(forgotPassword);
     };
 
-// 2- EVENT LISTENER, click on nav 'login'
+
+/*---------------------------------------------------------------------------------------------------------*/
+/*------------------------------ 2- EVENT LISTENER, click on nav 'login -----------------------------------*/
+/*---------------------------------------------------------------------------------------------------------*/
+
 const navLogin = document.querySelector("#login");
 navLogin.addEventListener("click", loginClick);
 
-// 3- POST THE ID/PSWD, ALERT IF SUCCESS OR NOT
+/*---------------------------------------------------------------------------------------------------------*/
+/*------------------------------ 3- POST THE ID/PSWD, ALERT IF SUCCESS OR NOT -----------------------------------*/
+/*---------------------------------------------------------------------------------------------------------*/
 
-// submit id + pwd function
+ // submit id + password function
 const submitLogin = async function(event) {
         event.preventDefault();
         // body elements
@@ -99,8 +111,10 @@ const submitLogin = async function(event) {
         };  
     };        
 
-    
-   /* ------------------------- CHANGES IN HOME PAGE IF USER IS CONNECTED ------------------------- */
+/*---------------------------------------------------------------------------------------------------------*/
+/*----------------------------- CHANGES IN HOME PAGE IF USER IS CONNECTED ---------------------------------*/
+/*---------------------------------------------------------------------------------------------------------*/
+
 var token = window.localStorage.getItem("token");
 if (token){ //visual changes
 
@@ -134,11 +148,19 @@ if (token){ //visual changes
     const editProjects = document.querySelector(".js-modal");
     editProjects.style.display = null;
 } ;
-/* logout */
-document.querySelector("#logout").addEventListener("click", function(){
+
+// Go back to index.html - function
+const backToHomePage = function(){
     localStorage.clear();
     window.location.replace("");
-});
+    navLogin.style.fontWeight = null ;
+};
 
+/*---------------------------------------------------------------------------------------------------------*/
+/*--------------------------------- BACK TO HOME PAGE / USER LOGOUT ---------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------*/
 
+/* logout */
+document.querySelector("#logout").addEventListener("click",backToHomePage) 
 
+/* --------------------------------------- END OF THE LOGIN SCRIPT --------------------------------------- */
