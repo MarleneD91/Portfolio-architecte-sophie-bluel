@@ -28,7 +28,7 @@
 	<nav>
 		<ul>
 			<li id="projects-nav">projets</li>
-			<li id="contact-nav">contact</li>
+			<li id="contact-nav"><a href="#contact">contact</a></li>
 			<li id="login">login</li>
 			<li id="logout" style="display:none">logout</li> <!-- Logout added -->
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
@@ -100,7 +100,12 @@
 <!-- ###################### MODAL ###################### -->
 	<aside id="edit-modal" class="modal" style="display:none" aria-hidden="true" role="presentation" aria-labelledby="modal-gallery-title">
 		<div class="modal-wrapper js-modal-stop">
-			<i class="fa-solid fa-xmark js-modal-close"></i><span id="close-txt">Fermer la modale</span>
+			<div id="top-icons">
+				<i class="fa-solid fa-arrow-left-long arrow-back" style="display:none"></i>
+				<span class="icon-txt">Revenir en arrière</span>
+				<i class="fa-solid fa-xmark js-modal-close"></i>
+				<span class="icon-txt">Fermer la modale</span>
+			</div>
 			<div id="modal-container">
 				<!-- Home edit -->
 				<div id="home-edit-modal" style="display: none;" class="inner-modal">

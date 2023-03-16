@@ -1,9 +1,13 @@
-/* Selecting the gallery + Initializing arrays where the datas will be stored */
+/* ################################### HOME PAGE : GALLERY + FILTERS  ################################### */
+
+// Initializing arrays where the datas will be stored
 const gallery = document.querySelector('.gallery');
 let categoriesArray = new Set();
 let allProjects = [];
 
-/* ------ CREATING ELEMENTS THAT DON'T NEED DATA ------ */
+/* ------------------------------------------------------------------------------------------------------*/
+/* ---------------------------- CREATING ELEMENTS THAT DON'T NEED DATA --------------------------------- */
+/* ------------------------------------------------------------------------------------------------------*/
 
 /* Creating the filters div */
 const filtersDiv = document.createElement("div");
@@ -18,8 +22,11 @@ allCategoriesButton.setAttribute("class","filter");
 allCategoriesButton.innerText = "Tous";
 filtersDiv.appendChild(allCategoriesButton);
 
-/* -------- RETRIEVING WORKS W/ FETCH : INSERTED INTO THE GALLERY --------
--------- / SELECTED BY CATEGORY-LINKED TO BUTTON CATEGORY -------- */
+
+/* ------------------------------------------------------------------------------------------------------*/
+/* ---------------------- RETRIEVING WORKS W/ FETCH : INSERTED INTO THE GALLERY ------------------------ */
+/* ------------------------ / SELECTED BY CATEGORY-LINKED TO BUTTON CATEGORY --------------------------- */
+/* ------------------------------------------------------------------------------------------------------*/
 
 // fetch the data / HTTP get request
 async function fetchData () {
@@ -74,6 +81,7 @@ fetchData()
             projectCaption.innerText = data.title; // adding text = title of the i object, into the figcaption tag
             projectFigure.appendChild(projectCaption); // append figcaption inside figure tag*/
     }
+
     //Using the data fetched
     function displayProjects(array){
         for (let i=0; i<array.length; i++){
@@ -82,11 +90,10 @@ fetchData()
             createIndexCards(projectData);
         };
     };
-    
     displayProjects(projects); // To display all the projects when the page load
-
-    let buttonId = null;  
+ 
     /* Onclick fonction that allows to display projects corresponding to the selected category */
+    let buttonId = null;  
     const filterOnClick = function(e) {
         e.preventDefault();
         buttonId = e.target.getAttribute("id");
@@ -102,8 +109,10 @@ fetchData()
                 displayProjects(filteredProjects);
         };
     };
+
     /* Add the event listener on the categories buttons */
     document.querySelectorAll(".filter").forEach(button => button.addEventListener("click",filterOnClick));    
-    
+  
 });
+
 /* --------------------------------- END OF THE GALLERY AND FILTERS SCRIPT --------------------------------- */
