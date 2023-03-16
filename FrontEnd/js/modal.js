@@ -157,7 +157,6 @@ fetchData().then(function(projects) {
 /* ---------------------------------------- DELETE PROJECT(S) ------------------------------------------- */
 /* -------------------------------------------------------------------------------------------------------*/
 
-//const authorizationKey = "Bearer " + 
 const deleteProject = function (e) {
     e.preventDefault();
 

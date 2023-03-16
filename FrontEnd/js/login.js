@@ -82,9 +82,7 @@ const submitLogin = async function(event) {
         // body elements
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
-        console.log(email);
-        console.log(password);
-        console.log(document.getElementById("password"))
+
         // define fetch post config object
         const postMethod = {
             method: "POST",
@@ -97,9 +95,7 @@ const submitLogin = async function(event) {
         // Fetch post
         const postInputs = await fetch("http://localhost:5678/api/users/login", postMethod);
         const fetchPostData = await postInputs.json();
-        //alert(postInputs.status);
-        console.log(fetchPostData);
-        console.log(postInputs);
+
         if (postInputs.status == 200){
             alert("Bienvenue sur le site!");
             window.localStorage.setItem("token", fetchPostData.token);
