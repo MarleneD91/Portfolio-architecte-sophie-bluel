@@ -145,6 +145,10 @@ if (token){ //visual changes
     editProjects.style.display = null;
 } ;
 
+/*---------------------------------------------------------------------------------------------------------*/
+/*--------------------------------- BACK TO HOME PAGE / USER LOGOUT ---------------------------------------*/
+/*---------------------------------------------------------------------------------------------------------*/
+
 // Go back to index.html - function
 const backToHomePage = function(){
     localStorage.clear();
@@ -152,11 +156,7 @@ const backToHomePage = function(){
     navLogin.style.fontWeight = null ;
 };
 
-/*---------------------------------------------------------------------------------------------------------*/
-/*--------------------------------- BACK TO HOME PAGE / USER LOGOUT ---------------------------------------*/
-/*---------------------------------------------------------------------------------------------------------*/
-
 /* logout */
-document.querySelector("#logout").addEventListener("click",backToHomePage) 
+document.querySelector("#logout").addEventListener("click", backToHomePage) 
 
 /* --------------------------------------- END OF THE LOGIN SCRIPT --------------------------------------- */
