@@ -233,9 +233,10 @@ const switchToAdd = function displayAddForm(e){
         // clear image upload bloc
         beforeAddingImage.style.display = null;
         imagePreviewDiv.style.display = "none";
-        // cLear the form + grey button
+        // cLear the form + grey button & warning p
         addForm.reset();
         submitNewProject.style.backgroundColor = "#A7A7A7";
+        missingFields.innerText = "";
         // clear Formdata
         newProjectData.delete("image");
         newProjectData.delete("category");
@@ -298,6 +299,7 @@ const changeInputsActions = function(e){
     } else if ( newProjectFileInput.value == "" || newTitleValue == "" || 
                 newCategoryValue == categoryZero ){
         submitNewProject.style.backgroundColor = "#A7A7A7"
+        missingFields.innerText = "";
     };    
 };
 // Add the change event listeners on inputs
